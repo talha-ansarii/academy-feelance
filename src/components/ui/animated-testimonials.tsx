@@ -46,10 +46,10 @@ export const AnimatedTestimonials = ({
   };
 
   return (
-    <div className="mx-auto max-w-sm px-4 py-16 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12 text-left">
-      <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">
+    <div className="mx-auto max-w-sm px-4 py-8 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12 text-left">
+      <div className="relative grid grid-cols-1 gap-12 md:gap-20 md:grid-cols-2">
         <div>
-          <div className="relative h-80 w-full hover:scale-[1.02] transition-transform duration-300">
+          <div className="relative h-64 md:h-80 w-full hover:scale-[1.02] transition-transform duration-300">
             <AnimatePresence>
               {testimonials.map((testimonial, index) => (
                 <motion.div
@@ -115,13 +115,13 @@ export const AnimatedTestimonials = ({
               ease: "easeInOut",
             }}
           >
-            <h3 className="text-2xl font-bold text-on-surface">
+            <h3 className="text-xl md:text-2xl font-bold text-on-surface">
               {testimonials[active]?.name}
             </h3>
-            <p className="text-sm text-primary font-bold tracking-wider uppercase mt-1">
+            <p className="text-xs md:text-sm text-primary font-bold tracking-wider uppercase mt-1">
               {testimonials[active]?.designation}
             </p>
-            <motion.p className="mt-8 text-lg text-on-surface-variant leading-relaxed">
+            <motion.p className="mt-4 md:mt-8 text-base md:text-lg text-on-surface-variant leading-relaxed">
               {testimonials[active]?.quote?.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
@@ -147,7 +147,7 @@ export const AnimatedTestimonials = ({
               ))}
             </motion.p>
           </motion.div>
-          <div className="flex gap-4 pt-12 md:pt-0">
+          <div className="flex gap-4 pt-8 md:pt-0">
             <button
               onClick={handlePrev}
               className="group/button flex h-12 w-12 items-center justify-center rounded-full bg-surface-variant hover:bg-primary-container transition-colors"

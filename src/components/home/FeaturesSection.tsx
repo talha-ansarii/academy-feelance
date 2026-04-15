@@ -25,7 +25,7 @@ export function FeaturesSection() {
   ];
 
   return (
-    <section className="py-24 px-6 bg-white perspective-1000">
+    <section className="py-16 md:py-24 px-6 bg-white perspective-1000">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16 text-center lg:text-left">
           <h2 className="font-headline text-3xl md:text-4xl font-bold text-on-background mb-6">Designed for Depth</h2>

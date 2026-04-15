@@ -16,7 +16,7 @@ export function LeadCaptureForm() {
   };
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-16 md:py-24 bg-background">
       <div className="max-w-3xl mx-auto px-6">
         <div className="clean-card p-10 md:p-12 rounded-xl bg-white shadow-lg border border-outline-variant">
           <div className="text-center mb-10">

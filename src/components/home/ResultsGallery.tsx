@@ -35,7 +35,7 @@ export function ResultsGallery() {
   ];
 
   return (
-    <section className="py-24 bg-surface-variant overflow-hidden">
+    <section className="py-16 layout-px md:py-24 bg-surface-variant overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 text-center">
         <h2 className="font-headline text-3xl md:text-4xl font-bold text-on-background mb-4">
           A Decade of Dominance
