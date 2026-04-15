@@ -15,7 +15,9 @@ export function useMousePosition(
     };
 
     const handleTouchMove = (event: TouchEvent) => {
-      const { clientX, clientY } = event.touches[0];
+      const touch = event.touches[0];
+      if (!touch) return;
+      const { clientX, clientY } = touch;
       const { top, left } = ref.current?.getBoundingClientRect() || {
         top: 0,
         left: 0,

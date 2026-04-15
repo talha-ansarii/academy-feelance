@@ -38,7 +38,7 @@ const LuxuryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     if (asChild && React.isValidElement(props.children)) {
       return React.cloneElement(props.children, {
-        className: cn(buttonVariants({ variant, size, className }), props.children.props.className),
+        className: cn(buttonVariants({ variant, size, className }), (props.children.props as any).className),
         ref: ref as any,
         ...props,
       } as any)
