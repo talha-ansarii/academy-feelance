@@ -5,28 +5,28 @@ export function Footer() {
     <footer className="bg-tertiary text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div>
-          <div className="font-bold text-xl text-white mb-6 tracking-tight">The Sovereign Scholar</div>
+          <div className="font-bold text-xl text-white mb-6 tracking-tight">Destiny 4 NEET</div>
           <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
-            Excellence in academic preparation through professional mentorship, exclusivity, and uncompromising standards.
+            Personal mentorship for NEET aspirants who need clarity, discipline, and a calm path toward becoming a doctor.
           </p>
         </div>
         <div className="flex flex-col gap-3">
-          <p className="font-bold text-[0.65rem] uppercase tracking-widest text-slate-500 mb-3">Resources</p>
-          <Link href="#" className="text-slate-400 hover:text-white transition-colors text-sm">Privacy Policy</Link>
-          <Link href="#" className="text-slate-400 hover:text-white transition-colors text-sm">Terms of Service</Link>
-          <Link href="#" className="text-slate-400 hover:text-white transition-colors text-sm">FAQ</Link>
-          <Link href="#" className="text-slate-400 hover:text-white transition-colors text-sm">Alumni Network</Link>
+          <p className="font-bold text-[0.65rem] uppercase tracking-widest text-slate-500 mb-3">Explore</p>
+          <Link href="/" className="text-slate-400 hover:text-white transition-colors text-sm">Home</Link>
+          <Link href="/about" className="text-slate-400 hover:text-white transition-colors text-sm">About</Link>
+          <Link href="/neet-course" className="text-slate-400 hover:text-white transition-colors text-sm">NEET Course</Link>
+          <Link href="/faculty" className="text-slate-400 hover:text-white transition-colors text-sm">Faculty Profile</Link>
         </div>
         <div>
           <p className="font-bold text-[0.65rem] uppercase tracking-widest text-slate-500 mb-6">Contact</p>
           <p className="text-slate-400 text-sm leading-relaxed mb-4">
-            102 Elite Avenue, Knowledge Park,<br />Mumbai, Maharashtra 400001
+            Book a demo class and speak with a mentor about batch fit, study habits, and your NEET preparation needs.
           </p>
-          <p className="text-white font-bold text-sm">+91 98765 43210</p>
+          <Link href="/#enquiry" className="text-white font-bold text-sm hover:text-primary-container transition-colors">Go to enquiry form</Link>
         </div>
       </div>
       <div className="mt-16 pt-8 border-t border-white/5 text-center">
-        <p className="text-slate-600 text-[0.7rem]">© 2024 The Sovereign Scholar. Professional NEET Preparation.</p>
+        <p className="text-slate-600 text-[0.7rem]">© 2024 Destiny 4 NEET. Focused preparation for future doctors.</p>
       </div>
     </footer>
   );

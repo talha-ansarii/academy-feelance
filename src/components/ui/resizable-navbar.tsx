@@ -246,7 +246,7 @@ export const NavbarLogo = () => {
       href="/"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1"
     >
-      <span className="font-bold text-xl text-primary tracking-tight">The Sovereign Scholar</span>
+      <span className="font-bold text-xl text-primary tracking-tight">Destiny 4 NEET</span>
     </a>
   );
 };

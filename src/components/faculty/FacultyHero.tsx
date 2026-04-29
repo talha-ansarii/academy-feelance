@@ -9,7 +9,7 @@ export function FacultyHero() {
         <span className="text-primary">Individual Brilliance.</span>
       </h1>
       <p className="max-w-2xl mx-auto font-body text-lg text-on-surface-variant leading-relaxed">
-        At The Sovereign Scholar, we believe mentorship is an art form. Our faculty are not just teachers; they are curators of potential, tailoring the path to NEET excellence for every unique mind.
+        At Destiny 4 NEET, faculty are not just lecturers. They are mentors who guide students with conceptual clarity, personal attention, and a genuine commitment to long-term growth.
       </p>
     </section>
   );

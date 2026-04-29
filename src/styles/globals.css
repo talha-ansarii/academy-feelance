@@ -174,7 +174,7 @@
 
 @layer utilities {
   .animate-scroll {
-    animation: scroll 40s linear infinite;
+    animation: scroll 25s linear infinite;
   }
   .pause:hover {
     animation-play-state: paused;
@@ -182,5 +182,19 @@
   @keyframes scroll {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-outline);
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-outline-variant);
   }
 }

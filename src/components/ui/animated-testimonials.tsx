@@ -121,7 +121,7 @@ export const AnimatedTestimonials = ({
             <p className="text-xs md:text-sm text-primary font-bold tracking-wider uppercase mt-1">
               {testimonials[active]?.designation}
             </p>
-            <motion.p className="mt-2 md:mt-8 text-sm md:text-lg text-on-surface-variant leading-relaxed">
+            <motion.p className="mt-2 md:mt-4 text-sm text-on-surface-variant leading-relaxed max-h-64 overflow-y-auto pr-2 custom-scrollbar">
               {testimonials[active]?.quote?.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
@@ -138,7 +138,7 @@ export const AnimatedTestimonials = ({
                   transition={{
                     duration: 0.2,
                     ease: "easeInOut",
-                    delay: 0.02 * index,
+                    delay: 0.01 * index, // Sped up the animation for long text
                   }}
                   className="inline-block"
                 >

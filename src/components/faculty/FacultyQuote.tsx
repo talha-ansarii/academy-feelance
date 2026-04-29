@@ -20,12 +20,12 @@ export function FacultyQuote() {
             Elite results are never mass-produced. They are curated through 1:1 precision.
           </h2>
           <p className="font-body text-primary-container text-lg leading-relaxed mb-10 italic">
-            "The modern academic factory fails the brilliant mind by demanding conformity. At The Sovereign Scholar, we flip the script. Every student is paired with a master mentor for personalized strategy sessions. We don't just teach the syllabus; we architect a mindset. Excellence is a dialogue, not a lecture."
+            "Teachers should be guides who awaken curiosity, not voices that simply transmit information. When students feel seen, challenged, and supported, preparation becomes deeper, steadier, and more meaningful."
           </p>
           <div>
-            <p className="text-xl font-bold mb-1">Amitav Kashyap</p>
+            <p className="text-xl font-bold mb-1">Destiny 4 NEET</p>
             <p className="text-[0.7rem] font-bold tracking-widest uppercase text-primary-container/80">
-              Founding Director &amp; Chief Curator
+              Mentorship philosophy
             </p>
           </div>
         </div>

@@ -8,6 +8,7 @@ export default function HomePage() {
   return (
     <main className="pt-24 overflow-x-hidden">
       <HeroSection />
+      <br/>
       <ResultsGallery />
       <FeaturesSection />
       <TestimonialSection />

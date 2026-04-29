@@ -15,10 +15,11 @@ import {
 
 export function Navbar() {
   const navItems = [
-    { name: "Courses", link: "#" },
+    { name: "NEET Course", link: "/neet-course" },
+    { name: "About", link: "/about" },
     { name: "Faculty Profile", link: "/faculty" },
-    { name: "Student Resource", link: "#" },
-    { name: "Contact Us", link: "#" },
+    { name: "Results", link: "/results" },
+    { name: "Contact", link: "/#enquiry" },
   ];
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -31,7 +32,7 @@ export function Navbar() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="primary">Enroll Now</NavbarButton>
+            <NavbarButton href="/#enquiry" variant="primary">Book Demo</NavbarButton>
           </div>
         </NavBody>
 
@@ -61,11 +62,12 @@ export function Navbar() {
             ))}
             <div className="flex w-full flex-col gap-4 mt-4">
               <NavbarButton
+                href="/#enquiry"
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
                 className="w-full text-lg py-3"
               >
-                Enroll Now
+                Book Demo
               </NavbarButton>
             </div>
           </MobileNavMenu>

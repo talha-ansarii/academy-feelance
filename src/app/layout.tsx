@@ -12,8 +12,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'The Sovereign Scholar | Excellence in NEET Preparation',
-  description: 'Premier medical entrance mentorship and high-end editorial experience.',
+  title: 'Destiny 4 NEET | Personal Mentorship for Medical Aspirants',
+  description: 'Focused NEET preparation with small batches, personal guidance, mock-test strategy, and student-first mentorship.',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 };
 

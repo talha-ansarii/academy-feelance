@@ -12,51 +12,35 @@ export function TestimonialSection() {
             </div>
           </div>
           <div>
-            <h2 className="font-headline text-2xl md:text-3xl font-bold text-white mb-8 md:mb-10">Professional Validation</h2>
+            <h2 className="font-headline text-2xl md:text-3xl font-bold text-white mb-8 md:mb-10">Mindset for the journey</h2>
             <div className="space-y-6">
-              {/*  Testimonial 1  */}
               <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
-                <p className="text-slate-300 italic mb-6">"Manohar Sir changed how I approach Biology. The clarity of instruction and personalized attention made the definitive difference."</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-white text-sm">RK</div>
-                    <div>
-                      <p className="text-white font-semibold text-sm">Rohan Kapoor</p>
-                      <p className="text-slate-500 text-[0.65rem] uppercase tracking-wider">Medical Aspirant</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <div className="text-center">
-                      <p className="text-[0.6rem] text-slate-500 uppercase">Prior</p>
-                      <p className="text-white font-bold">420</p>
-                    </div>
-                    <div className="text-center border-l border-white/10 pl-4">
-                      <p className="text-[0.6rem] text-slate-500 uppercase">Post</p>
-                      <p className="text-primary-container font-bold">685</p>
-                    </div>
+                <p className="text-slate-300 italic mb-6">"Approach NEET not with fear, but as the first decisive step toward your dream of becoming a doctor."</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-white text-sm">01</div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">Long-term goal</p>
+                    <p className="text-slate-500 text-[0.65rem] uppercase tracking-wider">Purpose over panic</p>
                   </div>
                 </div>
               </div>
-              {/*  Testimonial 2  */}
               <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
-                <p className="text-slate-300 italic mb-6">"The small batch size meant total transparency. Every doubt was resolved immediately, building immense confidence."</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-white text-sm">AV</div>
-                    <div>
-                      <p className="text-white font-semibold text-sm">Ananya Varma</p>
-                      <p className="text-slate-500 text-[0.65rem] uppercase tracking-wider">Medical Aspirant</p>
-                    </div>
+                <p className="text-slate-300 italic mb-6">"Low scores in mock tests are not a sign to quit. Every setback is a setup for a stronger comeback."</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-white text-sm">02</div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">Healthy resilience</p>
+                    <p className="text-slate-500 text-[0.65rem] uppercase tracking-wider">Progress through feedback</p>
                   </div>
-                  <div className="flex gap-4">
-                    <div className="text-center">
-                      <p className="text-[0.6rem] text-slate-500 uppercase">Prior</p>
-                      <p className="text-white font-bold">380</p>
-                    </div>
-                    <div className="text-center border-l border-white/10 pl-4">
-                      <p className="text-[0.6rem] text-slate-500 uppercase">Post</p>
-                      <p className="text-primary-container font-bold">652</p>
-                    </div>
+                </div>
+              </div>
+              <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
+                <p className="text-slate-300 italic mb-6">"Success in NEET comes from consistent, focused hard work supported by rest, balance, and the right guidance."</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-white text-sm">03</div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">Balanced preparation</p>
+                    <p className="text-slate-500 text-[0.65rem] uppercase tracking-wider">Discipline with support</p>
                   </div>
                 </div>
               </div>
