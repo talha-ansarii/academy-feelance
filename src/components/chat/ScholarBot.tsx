@@ -241,6 +241,10 @@ export function ScholarBot() {
             ? "Thanks for connecting! 🎉"
             : "Please wait...";
 
+  const isInputInvalid =
+    step === "ASK_EMAIL" && input.trim().length > 0 && !EMAIL_RE.test(input.trim());
+  const isSendDisabled = !canType || !input.trim() || isInputInvalid;
+
   /* ---------------------------------------------------------------- */
   /*  Render                                                           */
   /* ---------------------------------------------------------------- */
@@ -351,20 +355,31 @@ export function ScholarBot() {
 
             {/* ---- Input Bar ---- */}
             <div className="p-3 bg-white border-t border-outline-variant flex items-center gap-2">
-              <input
-                ref={inputRef}
-                className="flex-grow bg-slate-50 border-none text-xs focus:ring-1 focus:ring-primary/30 px-4 py-2.5 rounded-full outline-none transition-all disabled:opacity-60"
-                placeholder={inputPlaceholder}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                disabled={!canType}
-              />
+              <div className="relative flex-grow flex items-center">
+                <input
+                  ref={inputRef}
+                  className={`w-full bg-slate-50 text-xs focus:ring-1 px-4 py-2.5 rounded-full outline-none transition-all disabled:opacity-60 ${
+                    isInputInvalid
+                      ? "border border-red-400 focus:ring-red-400/50 text-red-900 bg-red-50"
+                      : "border-none focus:ring-primary/30"
+                  }`}
+                  placeholder={inputPlaceholder}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  disabled={!canType}
+                />
+                {isInputInvalid && (
+                  <span className="material-symbols-outlined text-red-500 absolute right-3 text-sm">
+                    error
+                  </span>
+                )}
+              </div>
               <button
                 onClick={handleSend}
-                disabled={!canType || !input.trim()}
-                className="w-9 h-9 flex items-center justify-center bg-primary text-white rounded-full hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSendDisabled}
+                className="w-9 h-9 flex-shrink-0 flex items-center justify-center bg-primary text-white rounded-full hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="material-symbols-outlined text-sm">send</span>
               </button>
