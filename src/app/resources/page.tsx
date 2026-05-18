@@ -1,226 +1,527 @@
 import type { Metadata } from "next";
 import { db } from "@/server/db";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "The Sovereign Scholar | Student Resource Page",
-  description: "Download free previous year papers, mock tests, and study notes for NEET preparation.",
+  description:
+    "Download free previous year papers, mock tests, and study notes for NEET preparation.",
 };
 
-export default async function ResourcesPage() {
-  // Fetch all published resources
-  const allResources = await db.resource.findMany({
-    where: { status: "Published" },
+// Helper to format file size
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+// Icon map for subjects
+function getSubjectIcon(subject: string): string {
+  switch (subject) {
+    case "Physics":
+      return "bolt";
+    case "Biology":
+      return "biotech";
+    case "Chemistry":
+      return "science";
+    default:
+      return "description";
+  }
+}
+
+// Icon map for categories
+function getCategoryIcon(category: string): string {
+  switch (category) {
+    case "Previous Year Paper":
+      return "history_edu";
+    case "Mock Test":
+      return "quiz";
+    case "Study Notes":
+      return "menu_book";
+    default:
+      return "folder";
+  }
+}
+
+export default async function ResourcesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    subject?: string;
+    category?: string;
+    classLevel?: string;
+    search?: string;
+  }>;
+}) {
+  const { subject, category, classLevel, search } = await searchParams;
+
+  // Build Prisma filter
+  const where: Record<string, unknown> = { status: "Published" };
+
+  if (subject && subject !== "All") {
+    where.subject = subject;
+  }
+  if (category && category !== "All") {
+    where.category = category;
+  }
+  if (classLevel && classLevel !== "All") {
+    where.classLevel = classLevel;
+  }
+  if (search) {
+    where.title = { contains: search, mode: "insensitive" };
+  }
+
+  const resources = await db.resource.findMany({
+    where,
     orderBy: { createdAt: "desc" },
   });
 
-  // Option C: Full Dynamic Mapping
-  // Categorize the resources
-  const pyqResources = allResources.filter(r => r.category === "Previous Year Paper");
-  const mockTests = allResources.filter(r => r.category === "Mock Test");
-  const studyNotes = allResources.filter(r => r.category === "Study Notes");
-
-  // For PYQs, group by year (or just sort by year descending)
-  const pyqSorted = [...pyqResources].sort((a, b) => {
-    const yearA = a.year || 0;
-    const yearB = b.year || 0;
-    return yearB - yearA; // Descending
+  // Counts for sidebar badges (always from full set)
+  const totalCount = await db.resource.count({
+    where: { status: "Published" },
+  });
+  const countByCategory = await db.resource.groupBy({
+    by: ["category"],
+    where: { status: "Published" },
+    _count: true,
+  });
+  const countBySubject = await db.resource.groupBy({
+    by: ["subject"],
+    where: { status: "Published" },
+    _count: true,
+  });
+  const countByClassLevel = await db.resource.groupBy({
+    by: ["classLevel"],
+    where: { status: "Published" },
+    _count: true,
   });
 
-  // For Study Notes, separate by Class and Subject
-  // We'll default to Class 11 initially if doing client side, 
-  // but for server component we can just show both or group them.
-  // The provided HTML uses a custom tab for Class 11/12. We'll render all grouped by subject,
-  // since the HTML had Physics, Bio, Chem columns.
-  const getSubjectNotes = (subject: string) => studyNotes.filter(n => n.subject === subject);
-  const physicsNotes = getSubjectNotes("Physics");
-  const bioNotes = getSubjectNotes("Biology");
-  const chemNotes = getSubjectNotes("Chemistry");
+  const subjects = ["All", "Physics", "Chemistry", "Biology"];
+  const categories = ["All", "Previous Year Paper", "Mock Test", "Study Notes"];
+  const classLevels = ["All", "Class 11", "Class 12"];
+
+  const hasActiveFilters = !!(
+    search ??
+    (subject && subject !== "All") ??
+    (category && category !== "All") ??
+    (classLevel && classLevel !== "All")
+  );
+
+  // Build URL helper
+  function buildFilterUrl(params: Record<string, string | undefined>): string {
+    const merged: Record<string, string> = {};
+    if (search) merged.search = search;
+    if (subject && subject !== "All") merged.subject = subject;
+    if (category && category !== "All") merged.category = category;
+    if (classLevel && classLevel !== "All") merged.classLevel = classLevel;
+    // Override with new params
+    for (const [k, v] of Object.entries(params)) {
+      if (v && v !== "All") {
+        merged[k] = v;
+      } else {
+        delete merged[k];
+      }
+    }
+    const qs = new URLSearchParams(merged).toString();
+    return qs ? `/resources?${qs}` : "/resources";
+  }
 
   return (
-    <main className="pt-20 pb-20 px-6 max-w-7xl mx-auto">
-      {/* Hero Section */}
-      <section className="mb-20 text-center md:text-left border-b border-outline pb-16">
-        <div className="inline-block px-3 py-1 mb-6 bg-primary-container text-on-primary-container rounded text-[10px] font-bold tracking-wider uppercase">
-          Academic Repository
-        </div>
-        <h1 className="font-heading text-4xl md:text-6xl font-extrabold text-on-surface mb-6 leading-tight tracking-tight">
-          The Scholarly <br/><span className="text-primary">Archive.</span>
-        </h1>
-        <p className="text-on-surface-variant max-w-2xl text-lg leading-relaxed mb-10">
-          Access a curated collection of rigorous academic material designed for the aspiring medical professional. From decadal archives to simulated examinations.
-        </p>
-      </section>
-
-      {/* Section 1: NEET Previous Year Papers */}
-      <section className="mb-24" id="previous-papers">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
-          <div>
-            <h2 className="font-heading text-2xl font-bold text-on-surface mb-2">NEET Previous Year Papers</h2>
-            <p className="text-on-surface-variant text-sm">Download official past papers and answer keys</p>
-          </div>
-          <div className="flex gap-3">
-            <span className="material-symbols-outlined text-primary-container text-4xl">history_edu</span>
-          </div>
-        </div>
-        
-        {pyqSorted.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {pyqSorted.map((paper, idx) => (
-              <a 
-                key={paper.id}
-                href={paper.blobUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-surface p-6 rounded border border-outline hover:border-primary hover:shadow-md transition-all duration-200 cursor-pointer block"
-              >
-                <div className="text-[10px] font-bold text-on-surface-variant opacity-60 mb-2 tracking-widest uppercase truncate">
-                  {paper.subject !== "All" ? paper.subject : "PREMIUM PDF"}
-                </div>
-                <div className="font-heading text-xl font-bold mb-4 truncate" title={paper.title}>
-                  {paper.year || paper.title}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="material-symbols-outlined text-lg text-primary">download</span>
-                  {idx === 0 && (
-                    <span className="text-[9px] font-bold text-primary tracking-widest uppercase">Latest</span>
-                  )}
-                </div>
-              </a>
-            ))}
-          </div>
-        ) : (
-          <div className="p-8 text-center border border-dashed border-outline rounded text-on-surface-variant text-sm">
-            No previous year papers uploaded yet.
-          </div>
-        )}
-      </section>
-
-      {/* Section 2: Free Mock Tests */}
-      <section className="mb-24">
-        <div className="relative rounded overflow-hidden mb-12 py-12 px-10 text-white bg-on-secondary-container">
-          <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "radial-gradient(#DEEBFF 1px, transparent 1px)", backgroundSize: "24px 24px" }}></div>
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="max-w-xl">
-              <h2 className="font-heading text-3xl font-bold mb-4">Free Mock Assessments</h2>
-              <p className="text-primary-container text-base opacity-90">Simulate the pressure of the examination hall. Our tests are calibrated to the latest NTA difficulty standards.</p>
+    <main className="min-h-screen bg-background pt-16 pb-20">
+      {/* Compact Hero */}
+      <section className="border-b border-outline bg-surface">
+        <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <div className="mb-3 inline-block rounded bg-primary-container px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-on-primary-container">
+                Academic Repository
+              </div>
+              <h1 className="font-heading text-3xl font-extrabold tracking-tight text-on-surface md:text-4xl">
+                The Scholarly{" "}
+                <span className="text-primary">Archive.</span>
+              </h1>
+              <p className="mt-2 max-w-lg text-sm leading-relaxed text-on-surface-variant">
+                Curated academic material for the aspiring medical
+                professional.
+              </p>
             </div>
-            <button className="bg-white text-on-secondary-container px-6 py-3 rounded font-bold text-sm hover:bg-primary-container transition-all">Start Full Length Test</button>
+
+            {/* Search bar */}
+            <form
+              action="/resources"
+              className="relative w-full max-w-sm"
+            >
+              {/* Preserve existing filter params */}
+              {subject && subject !== "All" && (
+                <input type="hidden" name="subject" value={subject} />
+              )}
+              {category && category !== "All" && (
+                <input type="hidden" name="category" value={category} />
+              )}
+              {classLevel && classLevel !== "All" && (
+                <input type="hidden" name="classLevel" value={classLevel} />
+              )}
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">
+                search
+              </span>
+              <input
+                type="text"
+                name="search"
+                defaultValue={search}
+                placeholder="Search resources..."
+                className="w-full rounded-lg border border-outline bg-surface-variant py-2.5 pl-10 pr-4 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
+              />
+            </form>
           </div>
         </div>
-        
-        {mockTests.length > 0 ? (
-          <div className="grid md:grid-cols-3 gap-8">
-            {mockTests.map((test) => (
-              <div key={test.id} className="bg-surface p-8 rounded border border-outline hover:shadow-lg transition-shadow flex flex-col">
-                <div className="w-10 h-10 bg-primary-container text-primary rounded flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-xl">
-                    {test.subject === 'Physics' ? 'bolt' : test.subject === 'Biology' ? 'biotech' : test.subject === 'Chemistry' ? 'science' : 'timer'}
-                  </span>
+      </section>
+
+      {/* Main content: Sidebar + Grid */}
+      <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
+        <div className="flex flex-col gap-8 lg:flex-row">
+          {/* ─── Left Sidebar ─── */}
+          <aside className="w-full shrink-0 lg:w-64">
+            <div className="sticky top-20 space-y-6">
+              {/* Active Filters summary */}
+              {hasActiveFilters && (
+                <div className="rounded-lg border border-primary/20 bg-primary-container/20 p-4">
+                  <div className="mb-3 flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                      Active Filters
+                    </span>
+                    <Link
+                      href="/resources"
+                      className="text-xs font-semibold text-primary hover:underline"
+                    >
+                      Clear all
+                    </Link>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {search && (
+                      <Link
+                        href={buildFilterUrl({ search: undefined })}
+                        className="inline-flex items-center gap-1 rounded-full bg-surface px-3 py-1 text-xs font-medium text-on-surface shadow-sm border border-outline hover:bg-surface-variant transition-colors"
+                      >
+                        &ldquo;{search}&rdquo;
+                        <span className="material-symbols-outlined text-[14px] text-on-surface-variant">
+                          close
+                        </span>
+                      </Link>
+                    )}
+                    {subject && subject !== "All" && (
+                      <Link
+                        href={buildFilterUrl({ subject: "All" })}
+                        className="inline-flex items-center gap-1 rounded-full bg-surface px-3 py-1 text-xs font-medium text-on-surface shadow-sm border border-outline hover:bg-surface-variant transition-colors"
+                      >
+                        {subject}
+                        <span className="material-symbols-outlined text-[14px] text-on-surface-variant">
+                          close
+                        </span>
+                      </Link>
+                    )}
+                    {category && category !== "All" && (
+                      <Link
+                        href={buildFilterUrl({ category: "All" })}
+                        className="inline-flex items-center gap-1 rounded-full bg-surface px-3 py-1 text-xs font-medium text-on-surface shadow-sm border border-outline hover:bg-surface-variant transition-colors"
+                      >
+                        {category}
+                        <span className="material-symbols-outlined text-[14px] text-on-surface-variant">
+                          close
+                        </span>
+                      </Link>
+                    )}
+                    {classLevel && classLevel !== "All" && (
+                      <Link
+                        href={buildFilterUrl({ classLevel: "All" })}
+                        className="inline-flex items-center gap-1 rounded-full bg-surface px-3 py-1 text-xs font-medium text-on-surface shadow-sm border border-outline hover:bg-surface-variant transition-colors"
+                      >
+                        {classLevel}
+                        <span className="material-symbols-outlined text-[14px] text-on-surface-variant">
+                          close
+                        </span>
+                      </Link>
+                    )}
+                  </div>
                 </div>
-                <h3 className="font-heading text-xl font-bold text-on-surface mb-2">{test.title}</h3>
-                <p className="text-on-surface-variant mb-6 text-sm">
-                  {test.classLevel} • {test.subject}
-                </p>
-                <div className="mt-auto">
-                  <a 
-                    href={test.blobUrl} 
+              )}
+
+              {/* Category Filter */}
+              <div className="rounded-lg border border-outline bg-surface p-5 shadow-sm">
+                <h3 className="mb-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+                  Category
+                </h3>
+                <nav className="space-y-1">
+                  {categories.map((cat) => {
+                    const isActive =
+                      cat === "All"
+                        ? !category || category === "All"
+                        : category === cat;
+                    const count =
+                      cat === "All"
+                        ? totalCount
+                        : (countByCategory.find((c) => c.category === cat)
+                            ?._count ?? 0);
+                    return (
+                      <Link
+                        key={cat}
+                        href={buildFilterUrl({ category: cat })}
+                        className={`flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
+                          isActive
+                            ? "bg-primary text-white shadow-sm"
+                            : "text-on-surface hover:bg-surface-variant"
+                        }`}
+                      >
+                        <span className="flex items-center gap-2.5">
+                          <span
+                            className={`material-symbols-outlined text-[18px] ${isActive ? "text-white" : "text-on-surface-variant"}`}
+                          >
+                            {cat === "All"
+                              ? "folder_open"
+                              : getCategoryIcon(cat)}
+                          </span>
+                          {cat === "All" ? "All Categories" : cat}
+                        </span>
+                        <span
+                          className={`min-w-[24px] rounded-full px-2 py-0.5 text-center text-[10px] font-bold ${
+                            isActive
+                              ? "bg-white/20 text-white"
+                              : "bg-surface-variant text-on-surface-variant"
+                          }`}
+                        >
+                          {count}
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Subject Filter */}
+              <div className="rounded-lg border border-outline bg-surface p-5 shadow-sm">
+                <h3 className="mb-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+                  Subject
+                </h3>
+                <nav className="space-y-1">
+                  {subjects.map((sub) => {
+                    const isActive =
+                      sub === "All"
+                        ? !subject || subject === "All"
+                        : subject === sub;
+                    const count =
+                      sub === "All"
+                        ? totalCount
+                        : (countBySubject.find((s) => s.subject === sub)
+                            ?._count ?? 0);
+                    return (
+                      <Link
+                        key={sub}
+                        href={buildFilterUrl({ subject: sub })}
+                        className={`flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
+                          isActive
+                            ? "bg-primary text-white shadow-sm"
+                            : "text-on-surface hover:bg-surface-variant"
+                        }`}
+                      >
+                        <span className="flex items-center gap-2.5">
+                          <span
+                            className={`material-symbols-outlined text-[18px] ${isActive ? "text-white" : "text-on-surface-variant"}`}
+                          >
+                            {sub === "All"
+                              ? "apps"
+                              : getSubjectIcon(sub)}
+                          </span>
+                          {sub === "All" ? "All Subjects" : sub}
+                        </span>
+                        <span
+                          className={`min-w-[24px] rounded-full px-2 py-0.5 text-center text-[10px] font-bold ${
+                            isActive
+                              ? "bg-white/20 text-white"
+                              : "bg-surface-variant text-on-surface-variant"
+                          }`}
+                        >
+                          {count}
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Class Level Filter */}
+              <div className="rounded-lg border border-outline bg-surface p-5 shadow-sm">
+                <h3 className="mb-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+                  Class
+                </h3>
+                <nav className="space-y-1">
+                  {classLevels.map((cls) => {
+                    const isActive =
+                      cls === "All"
+                        ? !classLevel || classLevel === "All"
+                        : classLevel === cls;
+                    const count =
+                      cls === "All"
+                        ? totalCount
+                        : (countByClassLevel.find((c) => c.classLevel === cls)
+                            ?._count ?? 0);
+                    return (
+                      <Link
+                        key={cls}
+                        href={buildFilterUrl({ classLevel: cls })}
+                        className={`flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
+                          isActive
+                            ? "bg-primary text-white shadow-sm"
+                            : "text-on-surface hover:bg-surface-variant"
+                        }`}
+                      >
+                        <span className="flex items-center gap-2.5">
+                          <span
+                            className={`material-symbols-outlined text-[18px] ${isActive ? "text-white" : "text-on-surface-variant"}`}
+                          >
+                            {cls === "All" ? "school" : "class"}
+                          </span>
+                          {cls === "All" ? "All Classes" : cls}
+                        </span>
+                        <span
+                          className={`min-w-[24px] rounded-full px-2 py-0.5 text-center text-[10px] font-bold ${
+                            isActive
+                              ? "bg-white/20 text-white"
+                              : "bg-surface-variant text-on-surface-variant"
+                          }`}
+                        >
+                          {count}
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+            </div>
+          </aside>
+
+          {/* ─── Main Content Area ─── */}
+          <section className="min-w-0 flex-1">
+            {/* Results header */}
+            <div className="mb-6 flex items-center justify-between">
+              <p className="text-sm text-on-surface-variant">
+                <span className="font-bold text-on-surface">
+                  {resources.length}
+                </span>{" "}
+                resource{resources.length !== 1 ? "s" : ""} found
+              </p>
+            </div>
+
+            {/* Resource Cards */}
+            {resources.length > 0 ? (
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {resources.map((resource) => (
+                  <a
+                    key={resource.id}
+                    href={resource.blobUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-primary font-bold gap-1 text-xs uppercase tracking-wider group"
+                    className="group flex flex-col rounded-lg border border-outline bg-surface p-5 shadow-sm transition-all duration-200 hover:border-primary hover:shadow-md"
                   >
-                    Download Test PDF <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="p-8 text-center border border-dashed border-outline rounded text-on-surface-variant text-sm">
-            No mock tests uploaded yet.
-          </div>
-        )}
-      </section>
+                    {/* Top row: icon + category badge */}
+                    <div className="mb-4 flex items-start justify-between">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-container text-primary">
+                        <span className="material-symbols-outlined text-xl">
+                          {getCategoryIcon(resource.category)}
+                        </span>
+                      </div>
+                      <span className="rounded-full bg-surface-variant px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">
+                        {resource.category}
+                      </span>
+                    </div>
 
-      {/* Section 3: Study Notes */}
-      <section className="mb-24">
-        <div className="mb-10">
-          <h2 className="font-heading text-2xl font-bold text-on-surface mb-2">Curated Study Notes</h2>
-          <p className="text-on-surface-variant text-sm">Class 11 & 12 structured wisdom</p>
+                    {/* Title */}
+                    <h3 className="mb-1 font-heading text-base font-bold leading-snug text-on-surface group-hover:text-primary line-clamp-2">
+                      {resource.title}
+                    </h3>
+
+                    {/* Meta row */}
+                    <div className="mt-1 mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-on-surface-variant">
+                      <span className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[14px]">
+                          {getSubjectIcon(resource.subject)}
+                        </span>
+                        {resource.subject}
+                      </span>
+                      <span>•</span>
+                      <span>{resource.classLevel}</span>
+                      {resource.year && (
+                        <>
+                          <span>•</span>
+                          <span>{resource.year}</span>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Bottom row */}
+                    <div className="mt-auto flex items-center justify-between border-t border-outline pt-3">
+                      <span className="text-[11px] text-on-surface-variant">
+                        {formatFileSize(resource.fileSize)}
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-primary transition-transform group-hover:translate-x-0.5">
+                        Download
+                        <span className="material-symbols-outlined text-[16px]">
+                          download
+                        </span>
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-outline bg-surface py-20 text-center">
+                <span className="material-symbols-outlined mb-4 text-5xl text-outline">
+                  search_off
+                </span>
+                <h3 className="text-lg font-bold text-on-surface">
+                  No resources found
+                </h3>
+                <p className="mt-2 max-w-xs text-sm text-on-surface-variant">
+                  Try adjusting your filters or search query to find what
+                  you&apos;re looking for.
+                </p>
+                {hasActiveFilters && (
+                  <Link
+                    href="/resources"
+                    className="mt-6 rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-on-primary-container transition-colors"
+                  >
+                    Clear all filters
+                  </Link>
+                )}
+              </div>
+            )}
+          </section>
         </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Physics Column */}
-          <div className="lg:col-span-4 bg-surface p-8 rounded border border-outline shadow-sm">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="material-symbols-outlined text-primary text-xl">bolt</span>
-              <h4 className="font-heading text-lg font-bold text-on-surface">Physics</h4>
-            </div>
-            {physicsNotes.length > 0 ? (
-              <div className="space-y-3">
-                {physicsNotes.map(note => (
-                  <a key={note.id} href={note.blobUrl} target="_blank" rel="noopener noreferrer" className="block p-3 border border-outline rounded hover:border-primary transition-colors group">
-                    <span className="text-sm font-semibold text-on-surface group-hover:text-primary">{note.title}</span>
-                    <div className="text-xs text-on-surface-variant mt-1">{note.classLevel}</div>
-                  </a>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xs text-on-surface-variant">No notes available.</p>
-            )}
-          </div>
-          
-          {/* Biology Column */}
-          <div className="lg:col-span-5 bg-surface p-8 rounded border border-outline shadow-sm">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="material-symbols-outlined text-primary text-xl">biotech</span>
-              <h4 className="font-heading text-lg font-bold text-on-surface">Biology</h4>
-            </div>
-            {bioNotes.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {bioNotes.map(note => (
-                  <a key={note.id} href={note.blobUrl} target="_blank" rel="noopener noreferrer" className="block p-3 border border-outline rounded hover:border-primary transition-colors group">
-                    <span className="text-sm font-semibold text-on-surface group-hover:text-primary line-clamp-1">{note.title}</span>
-                    <div className="text-xs text-on-surface-variant mt-1">{note.classLevel}</div>
-                  </a>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xs text-on-surface-variant">No notes available.</p>
-            )}
-          </div>
-          
-          {/* Chemistry Column */}
-          <div className="lg:col-span-3 bg-surface p-8 rounded border border-outline shadow-sm">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="material-symbols-outlined text-primary text-xl">syringe</span>
-              <h4 className="font-heading text-lg font-bold text-on-surface">Chemistry</h4>
-            </div>
-            {chemNotes.length > 0 ? (
-              <div className="space-y-3">
-                {chemNotes.map(note => (
-                  <a key={note.id} href={note.blobUrl} target="_blank" rel="noopener noreferrer" className="block p-3 border border-outline rounded hover:border-primary transition-colors group">
-                    <span className="text-sm font-semibold text-on-surface group-hover:text-primary">{note.title}</span>
-                    <div className="text-xs text-on-surface-variant mt-1">{note.classLevel}</div>
-                  </a>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xs text-on-surface-variant">No notes available.</p>
-            )}
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Newsletter Section */}
-      <section className="bg-primary-container/30 border border-primary/10 rounded p-12 text-center">
-        <h3 className="font-heading text-2xl font-bold text-on-surface mb-4">Never Miss a Critical Update</h3>
-        <p className="text-on-surface-variant mb-8 max-w-md mx-auto text-sm">Join 20,000+ aspirants receiving weekly high-yield notes and exam notifications directly in their inbox.</p>
-        <form className="flex flex-col md:flex-row gap-2 max-w-lg mx-auto">
-          <input className="flex-grow rounded border border-outline px-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 bg-white" placeholder="Enter your academic email" type="email" />
-          <button type="button" className="bg-primary text-white px-6 py-2 rounded font-bold text-sm hover:bg-on-primary-container transition-all">Subscribe</button>
-        </form>
+      <section className="mx-auto mt-16 max-w-7xl px-6 lg:px-8">
+        <div className="rounded-lg border border-primary/10 bg-primary-container/30 p-12 text-center">
+          <h3 className="font-heading text-2xl font-bold text-on-surface mb-4">
+            Never Miss a Critical Update
+          </h3>
+          <p className="mx-auto mb-8 max-w-md text-sm text-on-surface-variant">
+            Join 20,000+ aspirants receiving weekly high-yield notes and
+            exam notifications directly in their inbox.
+          </p>
+          <form className="mx-auto flex max-w-lg flex-col gap-2 md:flex-row">
+            <input
+              className="flex-grow rounded border border-outline bg-white px-4 py-2 text-sm focus:ring-2 focus:ring-primary/20"
+              placeholder="Enter your academic email"
+              type="email"
+            />
+            <button
+              type="button"
+              className="rounded bg-primary px-6 py-2 text-sm font-bold text-white hover:bg-on-primary-container transition-all"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
       </section>
-
     </main>
   );
 }
