@@ -7,12 +7,8 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
 }
 
 model Post {
@@ -72,4 +68,23 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Resource {
+    id          String   @id @default(cuid())
+    title       String
+    category    String   // "Previous Year Paper" | "Mock Test" | "Study Notes"
+    subject     String   // "Physics" | "Chemistry" | "Biology"
+    classLevel  String   // "Class 11" | "Class 12"
+    year        Int?
+    fileName    String   // Original file name
+    fileSize    Int      // Size in bytes
+    blobUrl     String   // Vercel Blob URL
+    status      String   @default("Published") // "Published" | "Draft"
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@index([subject])
+    @@index([category])
+    @@index([status])
 }

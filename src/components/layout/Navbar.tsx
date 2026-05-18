@@ -16,6 +16,7 @@ import {
 export function Navbar() {
   const navItems = [
     { name: "NEET Course", link: "/neet-course" },
+    { name: "Resources", link: "/resources" },
     { name: "About", link: "/about" },
     { name: "Faculty Profile", link: "/faculty" },
     { name: "Results", link: "/results" },
