@@ -181,6 +181,15 @@ exports.Prisma.ResourceScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ChatLeadScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  classLevel: 'classLevel',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -203,7 +212,8 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   User: 'User',
   VerificationToken: 'VerificationToken',
-  Resource: 'Resource'
+  Resource: 'Resource',
+  ChatLead: 'ChatLead'
 };
 
 /**

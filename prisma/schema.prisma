@@ -88,3 +88,12 @@ model Resource {
     @@index([category])
     @@index([status])
 }
+
+model ChatLead {
+    id         String   @id @default(cuid())
+    name       String
+    email      String   @unique
+    classLevel String   // "Class 11" | "Class 12" | "Dropper"
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+}

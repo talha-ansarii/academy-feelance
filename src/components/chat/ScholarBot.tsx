@@ -1,61 +1,371 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+/* ------------------------------------------------------------------ */
+/*  Types                                                              */
+/* ------------------------------------------------------------------ */
+
+type ChatStep =
+  | "GREETING"
+  | "ASK_NAME"
+  | "ASK_EMAIL"
+  | "ASK_CLASS"
+  | "SUBMITTING"
+  | "DONE"
+  | "ERROR";
+
+interface ChatMessage {
+  id: string;
+  role: "bot" | "user";
+  text: string;
+  buttons?: { label: string; value: string }[];
+}
+
+/* ------------------------------------------------------------------ */
+/*  Constants                                                          */
+/* ------------------------------------------------------------------ */
+
+const BOT_AVATAR =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuCTRl5WZYvMOCYVTFZpKxMdwgXgMzYCY2tFrG9YuTG_2HpQ2IEmc97w6G-8I-VPe10hjGtIux3Xc7mbhn85BATJyjabwHi31Z-sElcNIsR_2ohVEHCh2t-r9v9KsNyuLtfBY0VfWdZdLb7tOj6gcxSpkdkoAp9PCixhZ8oRfXDc7le0GBjPfoFxRJsoRds-e6dayy-n04oJBvaz40wRA2_1S7S6NOk_wHB9vJWaiw-PLZkJDEY1HW74FlFPXx1KJ_4p8RcpDJZRA3kc";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+let msgCounter = 0;
+function uid() {
+  return `msg-${++msgCounter}-${Date.now()}`;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Component                                                          */
+/* ------------------------------------------------------------------ */
 
 export function ScholarBot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [step, setStep] = useState<ChatStep>("GREETING");
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  // Collected data
+  const [leadName, setLeadName] = useState("");
+  const [leadEmail, setLeadEmail] = useState("");
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  /* ---- helpers ---- */
+
+  const scrollToBottom = useCallback(() => {
+    setTimeout(() => {
+      scrollRef.current?.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }, 50);
+  }, []);
+
+  const addBotMessage = useCallback(
+    (text: string, buttons?: ChatMessage["buttons"]) => {
+      setIsTyping(true);
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          { id: uid(), role: "bot", text, buttons },
+        ]);
+        setIsTyping(false);
+        scrollToBottom();
+      }, 600);
+    },
+    [scrollToBottom],
+  );
+
+  const addUserMessage = useCallback(
+    (text: string) => {
+      setMessages((prev) => [...prev, { id: uid(), role: "user", text }]);
+      scrollToBottom();
+    },
+    [scrollToBottom],
+  );
+
+  /* ---- init greeting when opened ---- */
+
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      addBotMessage(
+        "👋 Greetings, Scholar! I'd love to know more about you. What's your name?",
+      );
+      setStep("ASK_NAME");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
+  /* ---- focus input on step change ---- */
+
+  useEffect(() => {
+    if (
+      isOpen &&
+      (step === "ASK_NAME" || step === "ASK_EMAIL")
+    ) {
+      setTimeout(() => inputRef.current?.focus(), 700);
+    }
+  }, [step, isOpen]);
+
+  /* ---- submit lead to API ---- */
+
+  const submitLead = useCallback(
+    async (name: string, email: string, classLevel: string) => {
+      setStep("SUBMITTING");
+      setIsTyping(true);
+      scrollToBottom();
+
+      try {
+        const res = await fetch("/api/chat-lead", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, classLevel }),
+        });
+
+        const data = (await res.json()) as {
+          success?: boolean;
+          isNew?: boolean;
+          error?: string;
+        };
+
+        setIsTyping(false);
+
+        if (res.ok && data.success) {
+          addBotMessage(
+            `🎉 Awesome, ${name}! You're all set. We'll reach out to you at ${email} with details about your ${classLevel} journey. Welcome to the Destiny 4 NEET family!`,
+          );
+          setStep("DONE");
+        } else {
+          addBotMessage(
+            `😔 Oops! ${data.error ?? "Something went wrong."} Let's try again.`,
+          );
+          setStep("ERROR");
+        }
+      } catch {
+        setIsTyping(false);
+        addBotMessage(
+          "😔 Looks like there was a network issue. Please try again!",
+        );
+        setStep("ERROR");
+      }
+    },
+    [addBotMessage, scrollToBottom],
+  );
+
+  /* ---- handle user input ---- */
+
+  const handleSend = useCallback(() => {
+    const trimmed = input.trim();
+    if (!trimmed) return;
+    setInput("");
+
+    switch (step) {
+      case "ASK_NAME": {
+        addUserMessage(trimmed);
+        setLeadName(trimmed);
+        setStep("ASK_EMAIL");
+        addBotMessage(`Nice to meet you, ${trimmed}! 📧 What's your email address?`);
+        break;
+      }
+      case "ASK_EMAIL": {
+        if (!EMAIL_RE.test(trimmed)) {
+          addUserMessage(trimmed);
+          addBotMessage("Hmm, that doesn't look like a valid email. Could you try again?");
+          return;
+        }
+        addUserMessage(trimmed);
+        setLeadEmail(trimmed);
+        setStep("ASK_CLASS");
+        addBotMessage("📚 Which class are you in?", [
+          { label: "Class 11", value: "Class 11" },
+          { label: "Class 12", value: "Class 12" },
+          { label: "Dropper", value: "Dropper" },
+        ]);
+        break;
+      }
+      case "ERROR": {
+        // Retry: restart from name
+        setLeadName("");
+        setLeadEmail("");
+        setStep("ASK_NAME");
+        addBotMessage("Let's start fresh! What's your name?");
+        break;
+      }
+      default:
+        break;
+    }
+  }, [input, step, addUserMessage, addBotMessage]);
+
+  const handleClassSelect = useCallback(
+    (value: string) => {
+      addUserMessage(value);
+      void submitLead(leadName, leadEmail, value);
+    },
+    [addUserMessage, submitLead, leadName, leadEmail],
+  );
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  /* ---- reset on close so next open is fresh ---- */
+  const handleClose = () => {
+    setIsOpen(false);
+    // Don't reset if done or submitting – keep state for re-open
+  };
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  /* ---- can user type? ---- */
+  const canType =
+    step === "ASK_NAME" || step === "ASK_EMAIL" || step === "ERROR";
+
+  const inputPlaceholder =
+    step === "ASK_NAME"
+      ? "Enter your name..."
+      : step === "ASK_EMAIL"
+        ? "Enter your email..."
+        : step === "ERROR"
+          ? "Type anything to retry..."
+          : step === "DONE"
+            ? "Thanks for connecting! 🎉"
+            : "Please wait...";
+
+  /* ---------------------------------------------------------------- */
+  /*  Render                                                           */
+  /* ---------------------------------------------------------------- */
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
       <AnimatePresence>
-        {/* Expanded Chat Window */}
+        {/* ---- Expanded Chat Window ---- */}
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 20, originY: 1, originX: 1 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="absolute bottom-0 right-0 w-72 h-[22rem] rounded-2xl shadow-[0_20px_50px_rgba(10,88,202,0.2)] overflow-hidden bg-white border border-outline flex flex-col"
+            className="absolute bottom-0 right-0 w-80 h-[26rem] rounded-2xl shadow-[0_20px_50px_rgba(10,88,202,0.2)] overflow-hidden bg-white border border-outline flex flex-col"
           >
+            {/* ---- Header ---- */}
             <div className="bg-primary p-4 flex items-center justify-between text-white border-b border-white/10 relative overflow-hidden">
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
                 initial={{ x: "-100%" }}
                 animate={{ x: "200%" }}
-                transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2,
+                  ease: "linear",
+                }}
               />
               <div className="flex items-center gap-3 relative z-10">
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-white/20 border-2 border-white/30">
-                  <img alt="Scholar Assistant Avatar" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTRl5WZYvMOCYVTFZpKxMdwgXgMzYCY2tFrG9YuTG_2HpQ2IEmc97w6G-8I-VPe10hjGtIux3Xc7mbhn85BATJyjabwHi31Z-sElcNIsR_2ohVEHCh2t-r9v9KsNyuLtfBY0VfWdZdLb7tOj6gcxSpkdkoAp9PCixhZ8oRfXDc7le0GBjPfoFxRJsoRds-e6dayy-n04oJBvaz40wRA2_1S7S6NOk_wHB9vJWaiw-PLZkJDEY1HW74FlFPXx1KJ_4p8RcpDJZRA3kc" />
+                  <img
+                    alt="Scholar Assistant Avatar"
+                    className="w-full h-full object-cover"
+                    src={BOT_AVATAR}
+                  />
                 </div>
                 <div>
                   <p className="font-bold text-sm">Scholar Bot</p>
                   <p className="text-[0.6rem] text-white/80 uppercase tracking-wider flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                     Online
                   </p>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-white hover:bg-white/10 p-1 rounded-full transition-colors relative z-10">
-                <span className="material-symbols-outlined text-xl block">close</span>
+              <button
+                onClick={handleClose}
+                className="text-white hover:bg-white/10 p-1 rounded-full transition-colors relative z-10"
+              >
+                <span className="material-symbols-outlined text-xl block">
+                  close
+                </span>
               </button>
             </div>
-            
-            <div className="flex-grow p-4 bg-slate-50 overflow-y-auto">
-              <motion.div 
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="bg-white border border-outline-variant p-3 rounded-2xl rounded-tl-sm text-xs text-on-surface-variant max-w-[90%] shadow-sm"
-              >
-                Greetings, Scholar. How can I assist you in your NEET journey today?
-              </motion.div>
+
+            {/* ---- Messages ---- */}
+            <div
+              ref={scrollRef}
+              className="flex-grow p-4 bg-slate-50 overflow-y-auto space-y-3"
+            >
+              {messages.map((msg) => (
+                <motion.div
+                  key={msg.id}
+                  initial={{ opacity: 0, x: msg.role === "bot" ? -10 : 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className={`max-w-[85%] p-3 text-xs leading-relaxed shadow-sm ${
+                      msg.role === "bot"
+                        ? "bg-white border border-outline-variant rounded-2xl rounded-tl-sm text-on-surface-variant"
+                        : "bg-primary text-white rounded-2xl rounded-tr-sm"
+                    }`}
+                  >
+                    {msg.text}
+                    {/* Class selection buttons */}
+                    {msg.buttons && (
+                      <div className="flex gap-2 mt-3">
+                        {msg.buttons.map((btn) => (
+                          <button
+                            key={btn.value}
+                            onClick={() => handleClassSelect(btn.value)}
+                            disabled={step !== "ASK_CLASS"}
+                            className="px-4 py-2 bg-primary/10 text-primary text-xs font-semibold rounded-full border border-primary/20 hover:bg-primary hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {btn.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* Typing indicator */}
+              {isTyping && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex gap-1 items-center px-3 py-2"
+                >
+                  <span className="w-2 h-2 bg-primary/40 rounded-full animate-bounce [animation-delay:0ms]" />
+                  <span className="w-2 h-2 bg-primary/40 rounded-full animate-bounce [animation-delay:150ms]" />
+                  <span className="w-2 h-2 bg-primary/40 rounded-full animate-bounce [animation-delay:300ms]" />
+                </motion.div>
+              )}
             </div>
-            
+
+            {/* ---- Input Bar ---- */}
             <div className="p-3 bg-white border-t border-outline-variant flex items-center gap-2">
-              <input className="flex-grow bg-slate-50 border-none text-xs focus:ring-1 focus:ring-primary/30 px-4 py-2.5 rounded-full outline-none transition-all" placeholder="Type message..." type="text" />
-              <button className="w-9 h-9 flex items-center justify-center bg-primary text-white rounded-full hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-md">
+              <input
+                ref={inputRef}
+                className="flex-grow bg-slate-50 border-none text-xs focus:ring-1 focus:ring-primary/30 px-4 py-2.5 rounded-full outline-none transition-all disabled:opacity-60"
+                placeholder={inputPlaceholder}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                disabled={!canType}
+              />
+              <button
+                onClick={handleSend}
+                disabled={!canType || !input.trim()}
+                className="w-9 h-9 flex items-center justify-center bg-primary text-white rounded-full hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 <span className="material-symbols-outlined text-sm">send</span>
               </button>
             </div>
@@ -63,7 +373,7 @@ export function ScholarBot() {
         )}
       </AnimatePresence>
 
-      {/* Floating Action Button (Toggle) */}
+      {/* ---- Floating Action Button (Toggle) ---- */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -72,23 +382,25 @@ export function ScholarBot() {
             exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={() => setIsOpen(true)}
+            onClick={handleOpen}
             className="absolute bottom-0 right-0 w-14 h-14 bg-primary text-white rounded-full shadow-[0_10px_40px_rgba(10,88,202,0.4)] flex items-center justify-center border border-white/10 group"
           >
             {/* Subtle continuous pulse for the button to draw attention */}
-            <motion.div 
+            <motion.div
               className="absolute inset-0 rounded-full border border-primary"
-              animate={{ 
+              animate={{
                 scale: [1, 1.4, 1],
-                opacity: [0.5, 0, 0.5]
+                opacity: [0.5, 0, 0.5],
               }}
               transition={{
                 duration: 2.5,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
-            <span className="material-symbols-outlined text-2xl relative z-10 group-hover:animate-bounce">chat</span>
+            <span className="material-symbols-outlined text-2xl relative z-10 group-hover:animate-bounce">
+              chat
+            </span>
           </motion.button>
         )}
       </AnimatePresence>

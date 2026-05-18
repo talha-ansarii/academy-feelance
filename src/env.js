@@ -16,6 +16,10 @@ export const env = createEnv({
     BLOB_READ_WRITE_TOKEN: z.string(),
     ADMIN_PASSWORD: z.string().min(1),
     DATABASE_URL: z.string().url(),
+    MSG91_AUTH_KEY: z.string().optional(),
+    MSG91_EMAIL_FROM_NAME: z.string().optional(),
+    MSG91_EMAIL_FROM_EMAIL: z.string().optional(),
+    MSG91_EMAIL_DOMAIN: z.string().optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -41,6 +45,10 @@ export const env = createEnv({
     BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
     DATABASE_URL: process.env.DATABASE_URL,
+    MSG91_AUTH_KEY: process.env.MSG91_AUTH_KEY,
+    MSG91_EMAIL_FROM_NAME: process.env.MSG91_EMAIL_FROM_NAME,
+    MSG91_EMAIL_FROM_EMAIL: process.env.MSG91_EMAIL_FROM_EMAIL,
+    MSG91_EMAIL_DOMAIN: process.env.MSG91_EMAIL_DOMAIN,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**

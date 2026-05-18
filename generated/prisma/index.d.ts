@@ -43,6 +43,11 @@ export type VerificationToken = $Result.DefaultSelection<Prisma.$VerificationTok
  * 
  */
 export type Resource = $Result.DefaultSelection<Prisma.$ResourcePayload>
+/**
+ * Model ChatLead
+ * 
+ */
+export type ChatLead = $Result.DefaultSelection<Prisma.$ChatLeadPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -221,6 +226,16 @@ export class PrismaClient<
     * ```
     */
   get resource(): Prisma.ResourceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.chatLead`: Exposes CRUD operations for the **ChatLead** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChatLeads
+    * const chatLeads = await prisma.chatLead.findMany()
+    * ```
+    */
+  get chatLead(): Prisma.ChatLeadDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -667,7 +682,8 @@ export namespace Prisma {
     Session: 'Session',
     User: 'User',
     VerificationToken: 'VerificationToken',
-    Resource: 'Resource'
+    Resource: 'Resource',
+    ChatLead: 'ChatLead'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -686,7 +702,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "account" | "session" | "user" | "verificationToken" | "resource"
+      modelProps: "post" | "account" | "session" | "user" | "verificationToken" | "resource" | "chatLead"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1134,6 +1150,80 @@ export namespace Prisma {
           }
         }
       }
+      ChatLead: {
+        payload: Prisma.$ChatLeadPayload<ExtArgs>
+        fields: Prisma.ChatLeadFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChatLeadFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChatLeadFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload>
+          }
+          findFirst: {
+            args: Prisma.ChatLeadFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChatLeadFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload>
+          }
+          findMany: {
+            args: Prisma.ChatLeadFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload>[]
+          }
+          create: {
+            args: Prisma.ChatLeadCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload>
+          }
+          createMany: {
+            args: Prisma.ChatLeadCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChatLeadCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload>[]
+          }
+          delete: {
+            args: Prisma.ChatLeadDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload>
+          }
+          update: {
+            args: Prisma.ChatLeadUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload>
+          }
+          deleteMany: {
+            args: Prisma.ChatLeadDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChatLeadUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ChatLeadUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload>[]
+          }
+          upsert: {
+            args: Prisma.ChatLeadUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatLeadPayload>
+          }
+          aggregate: {
+            args: Prisma.ChatLeadAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChatLead>
+          }
+          groupBy: {
+            args: Prisma.ChatLeadGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChatLeadGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChatLeadCountArgs<ExtArgs>
+            result: $Utils.Optional<ChatLeadCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1236,6 +1326,7 @@ export namespace Prisma {
     user?: UserOmit
     verificationToken?: VerificationTokenOmit
     resource?: ResourceOmit
+    chatLead?: ChatLeadOmit
   }
 
   /* Types for Logging */
@@ -7921,6 +8012,1014 @@ export namespace Prisma {
 
 
   /**
+   * Model ChatLead
+   */
+
+  export type AggregateChatLead = {
+    _count: ChatLeadCountAggregateOutputType | null
+    _min: ChatLeadMinAggregateOutputType | null
+    _max: ChatLeadMaxAggregateOutputType | null
+  }
+
+  export type ChatLeadMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    classLevel: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChatLeadMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    classLevel: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChatLeadCountAggregateOutputType = {
+    id: number
+    name: number
+    email: number
+    classLevel: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ChatLeadMinAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    classLevel?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChatLeadMaxAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    classLevel?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChatLeadCountAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    classLevel?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ChatLeadAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChatLead to aggregate.
+     */
+    where?: ChatLeadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChatLeads to fetch.
+     */
+    orderBy?: ChatLeadOrderByWithRelationInput | ChatLeadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChatLeadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChatLeads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChatLeads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChatLeads
+    **/
+    _count?: true | ChatLeadCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChatLeadMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChatLeadMaxAggregateInputType
+  }
+
+  export type GetChatLeadAggregateType<T extends ChatLeadAggregateArgs> = {
+        [P in keyof T & keyof AggregateChatLead]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChatLead[P]>
+      : GetScalarType<T[P], AggregateChatLead[P]>
+  }
+
+
+
+
+  export type ChatLeadGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChatLeadWhereInput
+    orderBy?: ChatLeadOrderByWithAggregationInput | ChatLeadOrderByWithAggregationInput[]
+    by: ChatLeadScalarFieldEnum[] | ChatLeadScalarFieldEnum
+    having?: ChatLeadScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChatLeadCountAggregateInputType | true
+    _min?: ChatLeadMinAggregateInputType
+    _max?: ChatLeadMaxAggregateInputType
+  }
+
+  export type ChatLeadGroupByOutputType = {
+    id: string
+    name: string
+    email: string
+    classLevel: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ChatLeadCountAggregateOutputType | null
+    _min: ChatLeadMinAggregateOutputType | null
+    _max: ChatLeadMaxAggregateOutputType | null
+  }
+
+  type GetChatLeadGroupByPayload<T extends ChatLeadGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChatLeadGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChatLeadGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChatLeadGroupByOutputType[P]>
+            : GetScalarType<T[P], ChatLeadGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChatLeadSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    classLevel?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["chatLead"]>
+
+  export type ChatLeadSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    classLevel?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["chatLead"]>
+
+  export type ChatLeadSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    classLevel?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["chatLead"]>
+
+  export type ChatLeadSelectScalar = {
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    classLevel?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ChatLeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "classLevel" | "createdAt" | "updatedAt", ExtArgs["result"]["chatLead"]>
+
+  export type $ChatLeadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChatLead"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      email: string
+      classLevel: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["chatLead"]>
+    composites: {}
+  }
+
+  type ChatLeadGetPayload<S extends boolean | null | undefined | ChatLeadDefaultArgs> = $Result.GetResult<Prisma.$ChatLeadPayload, S>
+
+  type ChatLeadCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ChatLeadFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ChatLeadCountAggregateInputType | true
+    }
+
+  export interface ChatLeadDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChatLead'], meta: { name: 'ChatLead' } }
+    /**
+     * Find zero or one ChatLead that matches the filter.
+     * @param {ChatLeadFindUniqueArgs} args - Arguments to find a ChatLead
+     * @example
+     * // Get one ChatLead
+     * const chatLead = await prisma.chatLead.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChatLeadFindUniqueArgs>(args: SelectSubset<T, ChatLeadFindUniqueArgs<ExtArgs>>): Prisma__ChatLeadClient<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ChatLead that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ChatLeadFindUniqueOrThrowArgs} args - Arguments to find a ChatLead
+     * @example
+     * // Get one ChatLead
+     * const chatLead = await prisma.chatLead.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChatLeadFindUniqueOrThrowArgs>(args: SelectSubset<T, ChatLeadFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChatLeadClient<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChatLead that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatLeadFindFirstArgs} args - Arguments to find a ChatLead
+     * @example
+     * // Get one ChatLead
+     * const chatLead = await prisma.chatLead.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChatLeadFindFirstArgs>(args?: SelectSubset<T, ChatLeadFindFirstArgs<ExtArgs>>): Prisma__ChatLeadClient<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChatLead that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatLeadFindFirstOrThrowArgs} args - Arguments to find a ChatLead
+     * @example
+     * // Get one ChatLead
+     * const chatLead = await prisma.chatLead.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChatLeadFindFirstOrThrowArgs>(args?: SelectSubset<T, ChatLeadFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChatLeadClient<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ChatLeads that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatLeadFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChatLeads
+     * const chatLeads = await prisma.chatLead.findMany()
+     * 
+     * // Get first 10 ChatLeads
+     * const chatLeads = await prisma.chatLead.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const chatLeadWithIdOnly = await prisma.chatLead.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChatLeadFindManyArgs>(args?: SelectSubset<T, ChatLeadFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ChatLead.
+     * @param {ChatLeadCreateArgs} args - Arguments to create a ChatLead.
+     * @example
+     * // Create one ChatLead
+     * const ChatLead = await prisma.chatLead.create({
+     *   data: {
+     *     // ... data to create a ChatLead
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChatLeadCreateArgs>(args: SelectSubset<T, ChatLeadCreateArgs<ExtArgs>>): Prisma__ChatLeadClient<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ChatLeads.
+     * @param {ChatLeadCreateManyArgs} args - Arguments to create many ChatLeads.
+     * @example
+     * // Create many ChatLeads
+     * const chatLead = await prisma.chatLead.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChatLeadCreateManyArgs>(args?: SelectSubset<T, ChatLeadCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ChatLeads and returns the data saved in the database.
+     * @param {ChatLeadCreateManyAndReturnArgs} args - Arguments to create many ChatLeads.
+     * @example
+     * // Create many ChatLeads
+     * const chatLead = await prisma.chatLead.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ChatLeads and only return the `id`
+     * const chatLeadWithIdOnly = await prisma.chatLead.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChatLeadCreateManyAndReturnArgs>(args?: SelectSubset<T, ChatLeadCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ChatLead.
+     * @param {ChatLeadDeleteArgs} args - Arguments to delete one ChatLead.
+     * @example
+     * // Delete one ChatLead
+     * const ChatLead = await prisma.chatLead.delete({
+     *   where: {
+     *     // ... filter to delete one ChatLead
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChatLeadDeleteArgs>(args: SelectSubset<T, ChatLeadDeleteArgs<ExtArgs>>): Prisma__ChatLeadClient<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ChatLead.
+     * @param {ChatLeadUpdateArgs} args - Arguments to update one ChatLead.
+     * @example
+     * // Update one ChatLead
+     * const chatLead = await prisma.chatLead.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChatLeadUpdateArgs>(args: SelectSubset<T, ChatLeadUpdateArgs<ExtArgs>>): Prisma__ChatLeadClient<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ChatLeads.
+     * @param {ChatLeadDeleteManyArgs} args - Arguments to filter ChatLeads to delete.
+     * @example
+     * // Delete a few ChatLeads
+     * const { count } = await prisma.chatLead.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChatLeadDeleteManyArgs>(args?: SelectSubset<T, ChatLeadDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChatLeads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatLeadUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChatLeads
+     * const chatLead = await prisma.chatLead.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChatLeadUpdateManyArgs>(args: SelectSubset<T, ChatLeadUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChatLeads and returns the data updated in the database.
+     * @param {ChatLeadUpdateManyAndReturnArgs} args - Arguments to update many ChatLeads.
+     * @example
+     * // Update many ChatLeads
+     * const chatLead = await prisma.chatLead.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ChatLeads and only return the `id`
+     * const chatLeadWithIdOnly = await prisma.chatLead.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ChatLeadUpdateManyAndReturnArgs>(args: SelectSubset<T, ChatLeadUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ChatLead.
+     * @param {ChatLeadUpsertArgs} args - Arguments to update or create a ChatLead.
+     * @example
+     * // Update or create a ChatLead
+     * const chatLead = await prisma.chatLead.upsert({
+     *   create: {
+     *     // ... data to create a ChatLead
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChatLead we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChatLeadUpsertArgs>(args: SelectSubset<T, ChatLeadUpsertArgs<ExtArgs>>): Prisma__ChatLeadClient<$Result.GetResult<Prisma.$ChatLeadPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ChatLeads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatLeadCountArgs} args - Arguments to filter ChatLeads to count.
+     * @example
+     * // Count the number of ChatLeads
+     * const count = await prisma.chatLead.count({
+     *   where: {
+     *     // ... the filter for the ChatLeads we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChatLeadCountArgs>(
+      args?: Subset<T, ChatLeadCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChatLeadCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChatLead.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatLeadAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChatLeadAggregateArgs>(args: Subset<T, ChatLeadAggregateArgs>): Prisma.PrismaPromise<GetChatLeadAggregateType<T>>
+
+    /**
+     * Group by ChatLead.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatLeadGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChatLeadGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChatLeadGroupByArgs['orderBy'] }
+        : { orderBy?: ChatLeadGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChatLeadGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChatLeadGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChatLead model
+   */
+  readonly fields: ChatLeadFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChatLead.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChatLeadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ChatLead model
+   */
+  interface ChatLeadFieldRefs {
+    readonly id: FieldRef<"ChatLead", 'String'>
+    readonly name: FieldRef<"ChatLead", 'String'>
+    readonly email: FieldRef<"ChatLead", 'String'>
+    readonly classLevel: FieldRef<"ChatLead", 'String'>
+    readonly createdAt: FieldRef<"ChatLead", 'DateTime'>
+    readonly updatedAt: FieldRef<"ChatLead", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChatLead findUnique
+   */
+  export type ChatLeadFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * Filter, which ChatLead to fetch.
+     */
+    where: ChatLeadWhereUniqueInput
+  }
+
+  /**
+   * ChatLead findUniqueOrThrow
+   */
+  export type ChatLeadFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * Filter, which ChatLead to fetch.
+     */
+    where: ChatLeadWhereUniqueInput
+  }
+
+  /**
+   * ChatLead findFirst
+   */
+  export type ChatLeadFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * Filter, which ChatLead to fetch.
+     */
+    where?: ChatLeadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChatLeads to fetch.
+     */
+    orderBy?: ChatLeadOrderByWithRelationInput | ChatLeadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChatLeads.
+     */
+    cursor?: ChatLeadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChatLeads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChatLeads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChatLeads.
+     */
+    distinct?: ChatLeadScalarFieldEnum | ChatLeadScalarFieldEnum[]
+  }
+
+  /**
+   * ChatLead findFirstOrThrow
+   */
+  export type ChatLeadFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * Filter, which ChatLead to fetch.
+     */
+    where?: ChatLeadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChatLeads to fetch.
+     */
+    orderBy?: ChatLeadOrderByWithRelationInput | ChatLeadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChatLeads.
+     */
+    cursor?: ChatLeadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChatLeads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChatLeads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChatLeads.
+     */
+    distinct?: ChatLeadScalarFieldEnum | ChatLeadScalarFieldEnum[]
+  }
+
+  /**
+   * ChatLead findMany
+   */
+  export type ChatLeadFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * Filter, which ChatLeads to fetch.
+     */
+    where?: ChatLeadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChatLeads to fetch.
+     */
+    orderBy?: ChatLeadOrderByWithRelationInput | ChatLeadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChatLeads.
+     */
+    cursor?: ChatLeadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChatLeads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChatLeads.
+     */
+    skip?: number
+    distinct?: ChatLeadScalarFieldEnum | ChatLeadScalarFieldEnum[]
+  }
+
+  /**
+   * ChatLead create
+   */
+  export type ChatLeadCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ChatLead.
+     */
+    data: XOR<ChatLeadCreateInput, ChatLeadUncheckedCreateInput>
+  }
+
+  /**
+   * ChatLead createMany
+   */
+  export type ChatLeadCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChatLeads.
+     */
+    data: ChatLeadCreateManyInput | ChatLeadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChatLead createManyAndReturn
+   */
+  export type ChatLeadCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * The data used to create many ChatLeads.
+     */
+    data: ChatLeadCreateManyInput | ChatLeadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChatLead update
+   */
+  export type ChatLeadUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ChatLead.
+     */
+    data: XOR<ChatLeadUpdateInput, ChatLeadUncheckedUpdateInput>
+    /**
+     * Choose, which ChatLead to update.
+     */
+    where: ChatLeadWhereUniqueInput
+  }
+
+  /**
+   * ChatLead updateMany
+   */
+  export type ChatLeadUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChatLeads.
+     */
+    data: XOR<ChatLeadUpdateManyMutationInput, ChatLeadUncheckedUpdateManyInput>
+    /**
+     * Filter which ChatLeads to update
+     */
+    where?: ChatLeadWhereInput
+    /**
+     * Limit how many ChatLeads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChatLead updateManyAndReturn
+   */
+  export type ChatLeadUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * The data used to update ChatLeads.
+     */
+    data: XOR<ChatLeadUpdateManyMutationInput, ChatLeadUncheckedUpdateManyInput>
+    /**
+     * Filter which ChatLeads to update
+     */
+    where?: ChatLeadWhereInput
+    /**
+     * Limit how many ChatLeads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChatLead upsert
+   */
+  export type ChatLeadUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ChatLead to update in case it exists.
+     */
+    where: ChatLeadWhereUniqueInput
+    /**
+     * In case the ChatLead found by the `where` argument doesn't exist, create a new ChatLead with this data.
+     */
+    create: XOR<ChatLeadCreateInput, ChatLeadUncheckedCreateInput>
+    /**
+     * In case the ChatLead was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChatLeadUpdateInput, ChatLeadUncheckedUpdateInput>
+  }
+
+  /**
+   * ChatLead delete
+   */
+  export type ChatLeadDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+    /**
+     * Filter which ChatLead to delete.
+     */
+    where: ChatLeadWhereUniqueInput
+  }
+
+  /**
+   * ChatLead deleteMany
+   */
+  export type ChatLeadDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChatLeads to delete
+     */
+    where?: ChatLeadWhereInput
+    /**
+     * Limit how many ChatLeads to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChatLead without action
+   */
+  export type ChatLeadDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatLead
+     */
+    select?: ChatLeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatLead
+     */
+    omit?: ChatLeadOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -8010,6 +9109,18 @@ export namespace Prisma {
   };
 
   export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
+
+
+  export const ChatLeadScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    email: 'email',
+    classLevel: 'classLevel',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ChatLeadScalarFieldEnum = (typeof ChatLeadScalarFieldEnum)[keyof typeof ChatLeadScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8498,6 +9609,63 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
   }
 
+  export type ChatLeadWhereInput = {
+    AND?: ChatLeadWhereInput | ChatLeadWhereInput[]
+    OR?: ChatLeadWhereInput[]
+    NOT?: ChatLeadWhereInput | ChatLeadWhereInput[]
+    id?: StringFilter<"ChatLead"> | string
+    name?: StringFilter<"ChatLead"> | string
+    email?: StringFilter<"ChatLead"> | string
+    classLevel?: StringFilter<"ChatLead"> | string
+    createdAt?: DateTimeFilter<"ChatLead"> | Date | string
+    updatedAt?: DateTimeFilter<"ChatLead"> | Date | string
+  }
+
+  export type ChatLeadOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    classLevel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChatLeadWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    AND?: ChatLeadWhereInput | ChatLeadWhereInput[]
+    OR?: ChatLeadWhereInput[]
+    NOT?: ChatLeadWhereInput | ChatLeadWhereInput[]
+    name?: StringFilter<"ChatLead"> | string
+    classLevel?: StringFilter<"ChatLead"> | string
+    createdAt?: DateTimeFilter<"ChatLead"> | Date | string
+    updatedAt?: DateTimeFilter<"ChatLead"> | Date | string
+  }, "id" | "email">
+
+  export type ChatLeadOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    classLevel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ChatLeadCountOrderByAggregateInput
+    _max?: ChatLeadMaxOrderByAggregateInput
+    _min?: ChatLeadMinOrderByAggregateInput
+  }
+
+  export type ChatLeadScalarWhereWithAggregatesInput = {
+    AND?: ChatLeadScalarWhereWithAggregatesInput | ChatLeadScalarWhereWithAggregatesInput[]
+    OR?: ChatLeadScalarWhereWithAggregatesInput[]
+    NOT?: ChatLeadScalarWhereWithAggregatesInput | ChatLeadScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ChatLead"> | string
+    name?: StringWithAggregatesFilter<"ChatLead"> | string
+    email?: StringWithAggregatesFilter<"ChatLead"> | string
+    classLevel?: StringWithAggregatesFilter<"ChatLead"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ChatLead"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ChatLead"> | Date | string
+  }
+
   export type PostCreateInput = {
     name: string
     createdAt?: Date | string
@@ -8920,6 +10088,69 @@ export namespace Prisma {
     fileSize?: IntFieldUpdateOperationsInput | number
     blobUrl?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChatLeadCreateInput = {
+    id?: string
+    name: string
+    email: string
+    classLevel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChatLeadUncheckedCreateInput = {
+    id?: string
+    name: string
+    email: string
+    classLevel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChatLeadUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    classLevel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChatLeadUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    classLevel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChatLeadCreateManyInput = {
+    id?: string
+    name: string
+    email: string
+    classLevel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChatLeadUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    classLevel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChatLeadUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    classLevel?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9350,6 +10581,33 @@ export namespace Prisma {
   export type ResourceSumOrderByAggregateInput = {
     year?: SortOrder
     fileSize?: SortOrder
+  }
+
+  export type ChatLeadCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    classLevel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChatLeadMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    classLevel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChatLeadMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    classLevel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserCreateNestedOneWithoutPostsInput = {
