@@ -274,13 +274,6 @@ export function ScholarBot() {
                 }}
               />
               <div className="flex items-center gap-3 relative z-10">
-                <div className="w-10 h-10 rounded-full overflow-hidden bg-white/20 border-2 border-white/30">
-                  <img
-                    alt="Scholar Assistant Avatar"
-                    className="w-full h-full object-cover"
-                    src={BOT_AVATAR}
-                  />
-                </div>
                 <div>
                   <p className="font-bold text-sm">Scholar Bot</p>
                   <p className="text-[0.6rem] text-white/80 uppercase tracking-wider flex items-center gap-1">

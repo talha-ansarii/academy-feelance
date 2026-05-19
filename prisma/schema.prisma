@@ -93,7 +93,9 @@ model ChatLead {
     id         String   @id @default(cuid())
     name       String
     email      String   @unique
+    phone      String?
     classLevel String   // "Class 11" | "Class 12" | "Dropper"
+    goal       String?  // Optional goal description
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 }

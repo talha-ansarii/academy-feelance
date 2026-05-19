@@ -228,7 +228,7 @@ export function TestimonialsGrid() {
             <div className="fixed inset-0 flex items-center justify-center z-[110] p-4 pointer-events-none mt-16 md:mt-0">
               <motion.div
                 layoutId={`card-${selectedTestimonial.id}`}
-                className="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-2xl pointer-events-auto flex flex-col md:flex-row relative max-h-[85vh]"
+                className="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-3xl pointer-events-auto flex flex-col md:flex-row relative max-h-[75vh]"
               >
                 <button
                   onClick={() => setSelectedId(null)}
@@ -245,14 +245,14 @@ export function TestimonialsGrid() {
                   />
                 </motion.div>
 
-                <div className="w-full md:w-3/5 p-6 md:p-8 flex flex-col justify-center overflow-hidden">
+                <div className="w-full md:w-3/5 p-6 md:p-8 flex flex-col overflow-hidden">
                   <Quote className="text-blue-200 w-10 h-10 mb-3 -ml-2 rotate-180 shrink-0" />
                   
                   <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="overflow-y-auto custom-scrollbar pr-2 mb-6"
+                    className="flex-1 min-h-0 overflow-y-auto custom-scrollbar pr-4 mb-4"
                   >
                     <p className="text-sm md:text-base text-slate-700 font-medium leading-relaxed italic">
                       "{selectedTestimonial.quote}"

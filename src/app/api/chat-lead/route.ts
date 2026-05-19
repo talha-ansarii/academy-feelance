@@ -10,9 +10,11 @@ const TEMPLATE_ID = "scholar_bot_lead_notification"; // Replace with actual Msg9
 const leadSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
   email: z.string().email("Invalid email address"),
-  classLevel: z.enum(["Class 11", "Class 12", "Dropper"], {
+  classLevel: z.enum(["Class 11", "Class 12", "Dropper", "11th Grade", "12th Grade"], {
     errorMap: () => ({ message: "Class must be 'Class 11', 'Class 12', or 'Dropper'" }),
   }),
+  phone: z.string().optional(),
+  goal: z.string().optional(),
 });
 
 export async function POST(request: Request) {
@@ -27,13 +29,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, email, classLevel } = parsed.data;
+    const { name, email, classLevel, phone, goal } = parsed.data;
+
+    // Map frontend classLevel if needed
+    const normalizedClass = classLevel === "11th Grade" ? "Class 11" 
+                          : classLevel === "12th Grade" ? "Class 12" 
+                          : classLevel;
 
     // Upsert: create if new, update name/class if email already exists
     const lead = await db.chatLead.upsert({
       where: { email },
-      create: { name, email, classLevel },
-      update: { name, classLevel },
+      create: { name, email, classLevel: normalizedClass, phone, goal },
+      update: { name, classLevel: normalizedClass, ...(phone && { phone }), ...(goal && { goal }) },
     });
 
     // Send notification email (fire-and-forget, don't block the response)
@@ -46,6 +53,8 @@ export async function POST(request: Request) {
           student_name: name,
           student_email: email,
           student_class: classLevel,
+          student_phone: phone || "Not provided",
+          student_message: goal || "Not provided",
           submitted_at: new Date().toLocaleString("en-IN", {
             timeZone: "Asia/Kolkata",
           }),
@@ -66,7 +75,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("[ChatLead] Error:", error);
     return NextResponse.json(
-      { error: "Something went wrong. Please try again." },
+      { error: error instanceof Error ? error.message : "Something went wrong. Please try again." },
       { status: 500 },
     );
   }

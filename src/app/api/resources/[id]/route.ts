@@ -49,3 +49,49 @@ export async function DELETE(
     );
   }
 }
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader || authHeader !== `Bearer ${env.ADMIN_PASSWORD}`) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+    const body = await request.json();
+
+    // Find the resource to ensure it exists
+    const resource = await db.resource.findUnique({
+      where: { id },
+    });
+
+    if (!resource) {
+      return NextResponse.json({ error: "Resource not found" }, { status: 404 });
+    }
+
+    const { title, category, subject, classLevel, year, status } = body;
+
+    const updatedResource = await db.resource.update({
+      where: { id },
+      data: {
+        ...(title && { title }),
+        ...(category && { category }),
+        ...(subject && { subject }),
+        ...(classLevel && { classLevel }),
+        ...(year !== undefined && { year: year === null ? null : parseInt(year, 10) }),
+        ...(status && { status }),
+      },
+    });
+
+    return NextResponse.json({ success: true, resource: updatedResource });
+  } catch (error) {
+    console.error("Failed to update resource:", error);
+    return NextResponse.json(
+      { error: "Failed to update resource" },
+      { status: 500 }
+    );
+  }
+}

@@ -8025,7 +8025,9 @@ export namespace Prisma {
     id: string | null
     name: string | null
     email: string | null
+    phone: string | null
     classLevel: string | null
+    goal: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8034,7 +8036,9 @@ export namespace Prisma {
     id: string | null
     name: string | null
     email: string | null
+    phone: string | null
     classLevel: string | null
+    goal: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8043,7 +8047,9 @@ export namespace Prisma {
     id: number
     name: number
     email: number
+    phone: number
     classLevel: number
+    goal: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -8054,7 +8060,9 @@ export namespace Prisma {
     id?: true
     name?: true
     email?: true
+    phone?: true
     classLevel?: true
+    goal?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8063,7 +8071,9 @@ export namespace Prisma {
     id?: true
     name?: true
     email?: true
+    phone?: true
     classLevel?: true
+    goal?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8072,7 +8082,9 @@ export namespace Prisma {
     id?: true
     name?: true
     email?: true
+    phone?: true
     classLevel?: true
+    goal?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -8154,7 +8166,9 @@ export namespace Prisma {
     id: string
     name: string
     email: string
+    phone: string | null
     classLevel: string
+    goal: string | null
     createdAt: Date
     updatedAt: Date
     _count: ChatLeadCountAggregateOutputType | null
@@ -8180,7 +8194,9 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     email?: boolean
+    phone?: boolean
     classLevel?: boolean
+    goal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["chatLead"]>
@@ -8189,7 +8205,9 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     email?: boolean
+    phone?: boolean
     classLevel?: boolean
+    goal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["chatLead"]>
@@ -8198,7 +8216,9 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     email?: boolean
+    phone?: boolean
     classLevel?: boolean
+    goal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["chatLead"]>
@@ -8207,12 +8227,14 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     email?: boolean
+    phone?: boolean
     classLevel?: boolean
+    goal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ChatLeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "classLevel" | "createdAt" | "updatedAt", ExtArgs["result"]["chatLead"]>
+  export type ChatLeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "classLevel" | "goal" | "createdAt" | "updatedAt", ExtArgs["result"]["chatLead"]>
 
   export type $ChatLeadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ChatLead"
@@ -8221,7 +8243,9 @@ export namespace Prisma {
       id: string
       name: string
       email: string
+      phone: string | null
       classLevel: string
+      goal: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["chatLead"]>
@@ -8650,7 +8674,9 @@ export namespace Prisma {
     readonly id: FieldRef<"ChatLead", 'String'>
     readonly name: FieldRef<"ChatLead", 'String'>
     readonly email: FieldRef<"ChatLead", 'String'>
+    readonly phone: FieldRef<"ChatLead", 'String'>
     readonly classLevel: FieldRef<"ChatLead", 'String'>
+    readonly goal: FieldRef<"ChatLead", 'String'>
     readonly createdAt: FieldRef<"ChatLead", 'DateTime'>
     readonly updatedAt: FieldRef<"ChatLead", 'DateTime'>
   }
@@ -9115,7 +9141,9 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     email: 'email',
+    phone: 'phone',
     classLevel: 'classLevel',
+    goal: 'goal',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -9616,7 +9644,9 @@ export namespace Prisma {
     id?: StringFilter<"ChatLead"> | string
     name?: StringFilter<"ChatLead"> | string
     email?: StringFilter<"ChatLead"> | string
+    phone?: StringNullableFilter<"ChatLead"> | string | null
     classLevel?: StringFilter<"ChatLead"> | string
+    goal?: StringNullableFilter<"ChatLead"> | string | null
     createdAt?: DateTimeFilter<"ChatLead"> | Date | string
     updatedAt?: DateTimeFilter<"ChatLead"> | Date | string
   }
@@ -9625,7 +9655,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrderInput | SortOrder
     classLevel?: SortOrder
+    goal?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9637,7 +9669,9 @@ export namespace Prisma {
     OR?: ChatLeadWhereInput[]
     NOT?: ChatLeadWhereInput | ChatLeadWhereInput[]
     name?: StringFilter<"ChatLead"> | string
+    phone?: StringNullableFilter<"ChatLead"> | string | null
     classLevel?: StringFilter<"ChatLead"> | string
+    goal?: StringNullableFilter<"ChatLead"> | string | null
     createdAt?: DateTimeFilter<"ChatLead"> | Date | string
     updatedAt?: DateTimeFilter<"ChatLead"> | Date | string
   }, "id" | "email">
@@ -9646,7 +9680,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrderInput | SortOrder
     classLevel?: SortOrder
+    goal?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ChatLeadCountOrderByAggregateInput
@@ -9661,7 +9697,9 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ChatLead"> | string
     name?: StringWithAggregatesFilter<"ChatLead"> | string
     email?: StringWithAggregatesFilter<"ChatLead"> | string
+    phone?: StringNullableWithAggregatesFilter<"ChatLead"> | string | null
     classLevel?: StringWithAggregatesFilter<"ChatLead"> | string
+    goal?: StringNullableWithAggregatesFilter<"ChatLead"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ChatLead"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ChatLead"> | Date | string
   }
@@ -10096,7 +10134,9 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    phone?: string | null
     classLevel: string
+    goal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10105,7 +10145,9 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    phone?: string | null
     classLevel: string
+    goal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10114,7 +10156,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     classLevel?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10123,7 +10167,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     classLevel?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10132,7 +10178,9 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    phone?: string | null
     classLevel: string
+    goal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10141,7 +10189,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     classLevel?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10150,7 +10200,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     classLevel?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10587,7 +10639,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrder
     classLevel?: SortOrder
+    goal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10596,7 +10650,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrder
     classLevel?: SortOrder
+    goal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10605,7 +10661,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    phone?: SortOrder
     classLevel?: SortOrder
+    goal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }

@@ -21,7 +21,7 @@ export function FacultyGrid() {
       role: "Botany Expert",
       experience: "18+ Yrs Exp",
       achievements: "Specialist in building a strong foundation in Plant Sciences.",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD909o4WXhi6v8j4v1gpEhRgzsoynY2wkaj_GFtJbox-6N4RcIJCbrXZJEOftqaDM0a3_X1QVY3b4G8DjhbwzddCHHV24sGbJwUySLo_Qw7-6PR0ZRZCToEYxU5We8p-w7ZpCGplSCfuNmfjQQa3YJFcHYz2dVV3dEP6Xw45MauQmiMw3SxuUq2tq9IK6xOt6Mf9-n64RahA95vwuGsN4DB3t-LT2uYotSgYmB22KpJXNOmL-iQfc7C1k5z-bs86U_DGwoDKHbpsK-e",
+      image: "/sir/sanjay.jpeg",
       alt: "Mr. Sanjay Kumar"
     },
     {
@@ -42,14 +42,6 @@ export function FacultyGrid() {
           <p className="text-on-surface-variant font-body leading-relaxed">
             Meet the architects of our curriculum. Each member brings decades of expertise and a proven track record of placing students in India's top medical colleges.
           </p>
-        </div>
-        <div className="flex gap-4">
-          <button className="w-10 h-10 rounded-full border border-outline flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-all">
-            <span className="material-symbols-outlined text-sm">arrow_back</span>
-          </button>
-          <button className="w-10 h-10 rounded-full border border-outline flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-all">
-            <span className="material-symbols-outlined text-sm">arrow_forward</span>
-          </button>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
