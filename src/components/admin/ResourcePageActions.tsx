@@ -64,7 +64,9 @@ export function ResourcePageActions({ resources }: { resources: Resource[] }) {
     let successCount = 0;
     
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+      const file = files.item(i);
+      if (!file) continue;
+      
       try {
         const formData = new FormData();
         const defaultTitle = file.name.split('.').slice(0, -1).join('.') || file.name;
