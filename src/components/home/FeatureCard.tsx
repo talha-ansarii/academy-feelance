@@ -62,8 +62,8 @@ export function FeatureCard({
     <div
       ref={containerRef}
       className={cn(
-        "clean-card p-8 rounded-2xl bg-white shadow-sm border border-transparent",
-        "hover:shadow-xl hover:border-primary/10 transition-all ease-linear will-change-transform relative z-0 overflow-hidden"
+        "p-8 rounded-2xl bg-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100",
+        "hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.1)] hover:border-blue-200 transition-all ease-linear will-change-transform relative z-0 overflow-hidden group"
       )}
       style={{
         transform: "perspective(400px) rotateX(var(--x, 0deg)) rotateY(var(--y, 0deg))",
@@ -83,17 +83,23 @@ export function FeatureCard({
         containerRef.current.style.setProperty("--y", "0deg");
       }}
     >
-      <div className="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center mb-6 pointer-events-none">
-        <span className="material-symbols-outlined text-primary text-2xl">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      
+      <div className="relative w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6 pointer-events-none shadow-sm border border-blue-100 group-hover:scale-110 group-hover:bg-blue-600 transition-all duration-300">
+        <span className="material-symbols-outlined text-blue-600 text-2xl group-hover:text-white transition-colors duration-300">
           {icon}
         </span>
       </div>
-      <h4 className="font-bold text-xl text-on-background mb-3 pointer-events-none">
+      
+      <h4 className="relative font-bold text-xl text-slate-900 mb-3 pointer-events-none group-hover:text-blue-700 transition-colors duration-300">
         {title}
       </h4>
-      <p className="text-on-surface-variant text-sm leading-relaxed pointer-events-none">
+      
+      <p className="relative text-slate-600 text-sm leading-relaxed pointer-events-none">
         {description}
       </p>
+      
+      <div className="absolute bottom-0 left-0 h-1 w-0 bg-blue-600 group-hover:w-full transition-all duration-500 ease-out" />
     </div>
   );
 }

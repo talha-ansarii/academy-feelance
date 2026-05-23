@@ -18,7 +18,7 @@ export function FacultyGrid() {
     },
     {
       name: "Mr. Sanjay Kumar",
-      role: "Botany Expert",
+      role: "Biology Expert",
       experience: "18+ Yrs Exp",
       achievements: "Specialist in building a strong foundation in Plant Sciences.",
       image: "/sir/sanjay.jpeg",
@@ -26,7 +26,7 @@ export function FacultyGrid() {
     },
     {
       name: "Dr. Manohar Sah",
-      role: "Zoology Expert",
+      role: "Biology Expert",
       experience: "30+ Yrs Exp",
       achievements: "Renowned mentor for Zoology with thousands of successful medical aspirants.",
       image: "/sir/manohar.png",

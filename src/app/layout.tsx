@@ -1,12 +1,17 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Plus_Jakarta_Sans, Outfit } from 'next/font/google';
 import '@/styles/globals.css';
 
 import { PublicLayoutWrapper } from '@/components/layout/PublicLayoutWrapper';
 
-const inter = Inter({
+const sans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
+});
+
+const heading = Outfit({
+  subsets: ['latin'],
+  variable: '--font-heading',
 });
 
 export const metadata: Metadata = {
@@ -19,7 +24,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} scroll-smooth`}>
+    <html lang="en" className={`${sans.variable} ${heading.variable} scroll-smooth`}>
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>

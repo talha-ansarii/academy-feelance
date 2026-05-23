@@ -159,7 +159,7 @@ export function TestimonialsGrid() {
               <img
                 src={testimonial.image}
                 alt={testimonial.name}
-                className="w-full h-full object-cover rounded-xl"
+                className="w-full h-full object-cover object-top rounded-xl"
               />
             </motion.div>
             
@@ -178,10 +178,8 @@ export function TestimonialsGrid() {
                   {testimonial.score} • {testimonial.rank}
                 </div>
                 
-                <div className="mt-3">
-                  <span className="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full">
-                    {testimonial.batch}
-                  </span>
+                <div className="mt-4 text-sm font-medium text-blue-600 flex items-center justify-center transition-colors">
+                  Click to view <span className="ml-1">&rarr;</span>
                 </div>
               </div>
             </motion.div>

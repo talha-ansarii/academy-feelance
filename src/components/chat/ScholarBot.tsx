@@ -11,6 +11,7 @@ type ChatStep =
   | "GREETING"
   | "ASK_NAME"
   | "ASK_EMAIL"
+  | "ASK_PHONE"
   | "ASK_CLASS"
   | "SUBMITTING"
   | "DONE"
@@ -51,9 +52,29 @@ export function ScholarBot() {
   // Collected data
   const [leadName, setLeadName] = useState("");
   const [leadEmail, setLeadEmail] = useState("");
+  const [leadPhone, setLeadPhone] = useState("");
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  /* ---- auto open ---- */
+  useEffect(() => {
+    // If it's open, or user already completed the flow, don't set a timer
+    if (isOpen || sessionStorage.getItem("scholarbot_completed") === "true") return;
+
+    const closeCount = parseInt(sessionStorage.getItem("scholarbot_close_count") || "0", 10);
+
+    let delay = 5000;
+    if (closeCount === 1) delay = 10000;
+    else if (closeCount === 2) delay = 20000;
+    else if (closeCount >= 3) delay = 30000;
+
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [isOpen]);
 
   /* ---- helpers ---- */
 
@@ -106,7 +127,7 @@ export function ScholarBot() {
   useEffect(() => {
     if (
       isOpen &&
-      (step === "ASK_NAME" || step === "ASK_EMAIL")
+      (step === "ASK_NAME" || step === "ASK_EMAIL" || step === "ASK_PHONE")
     ) {
       setTimeout(() => inputRef.current?.focus(), 700);
     }
@@ -115,7 +136,7 @@ export function ScholarBot() {
   /* ---- submit lead to API ---- */
 
   const submitLead = useCallback(
-    async (name: string, email: string, classLevel: string) => {
+    async (name: string, email: string, phone: string, classLevel: string) => {
       setStep("SUBMITTING");
       setIsTyping(true);
       scrollToBottom();
@@ -124,7 +145,7 @@ export function ScholarBot() {
         const res = await fetch("/api/chat-lead", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, classLevel }),
+          body: JSON.stringify({ name, email, phone: phone || undefined, classLevel }),
         });
 
         const data = (await res.json()) as {
@@ -140,6 +161,7 @@ export function ScholarBot() {
             `🎉 Awesome, ${name}! You're all set. We'll reach out to you at ${email} with details about your ${classLevel} journey. Welcome to the Destiny 4 NEET family!`,
           );
           setStep("DONE");
+          sessionStorage.setItem("scholarbot_completed", "true");
         } else {
           addBotMessage(
             `😔 Oops! ${data.error ?? "Something went wrong."} Let's try again.`,
@@ -180,6 +202,15 @@ export function ScholarBot() {
         }
         addUserMessage(trimmed);
         setLeadEmail(trimmed);
+        setStep("ASK_PHONE");
+        addBotMessage("Got it! What's your phone number?", [
+          { label: "Skip", value: "SKIP_PHONE" }
+        ]);
+        break;
+      }
+      case "ASK_PHONE": {
+        addUserMessage(trimmed);
+        setLeadPhone(trimmed);
         setStep("ASK_CLASS");
         addBotMessage("📚 Which class are you in?", [
           { label: "Class 11", value: "Class 11" },
@@ -192,6 +223,7 @@ export function ScholarBot() {
         // Retry: restart from name
         setLeadName("");
         setLeadEmail("");
+        setLeadPhone("");
         setStep("ASK_NAME");
         addBotMessage("Let's start fresh! What's your name?");
         break;
@@ -201,12 +233,23 @@ export function ScholarBot() {
     }
   }, [input, step, addUserMessage, addBotMessage]);
 
-  const handleClassSelect = useCallback(
+  const handleButtonAction = useCallback(
     (value: string) => {
-      addUserMessage(value);
-      void submitLead(leadName, leadEmail, value);
+      if (step === "ASK_PHONE" && value === "SKIP_PHONE") {
+        addUserMessage("Skipped");
+        setLeadPhone("");
+        setStep("ASK_CLASS");
+        addBotMessage("📚 Which class are you in?", [
+          { label: "Class 11", value: "Class 11" },
+          { label: "Class 12", value: "Class 12" },
+          { label: "Dropper", value: "Dropper" },
+        ]);
+      } else if (step === "ASK_CLASS") {
+        addUserMessage(value);
+        void submitLead(leadName, leadEmail, leadPhone, value);
+      }
     },
-    [addUserMessage, submitLead, leadName, leadEmail],
+    [step, addUserMessage, addBotMessage, submitLead, leadName, leadEmail, leadPhone],
   );
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -219,7 +262,8 @@ export function ScholarBot() {
   /* ---- reset on close so next open is fresh ---- */
   const handleClose = () => {
     setIsOpen(false);
-    // Don't reset if done or submitting – keep state for re-open
+    const count = parseInt(sessionStorage.getItem("scholarbot_close_count") || "0", 10);
+    sessionStorage.setItem("scholarbot_close_count", (count + 1).toString());
   };
 
   const handleOpen = () => {
@@ -228,18 +272,20 @@ export function ScholarBot() {
 
   /* ---- can user type? ---- */
   const canType =
-    step === "ASK_NAME" || step === "ASK_EMAIL" || step === "ERROR";
+    step === "ASK_NAME" || step === "ASK_EMAIL" || step === "ASK_PHONE" || step === "ERROR";
 
   const inputPlaceholder =
     step === "ASK_NAME"
       ? "Enter your name..."
       : step === "ASK_EMAIL"
         ? "Enter your email..."
-        : step === "ERROR"
-          ? "Type anything to retry..."
-          : step === "DONE"
-            ? "Thanks for connecting! 🎉"
-            : "Please wait...";
+        : step === "ASK_PHONE"
+          ? "Enter your phone number..."
+          : step === "ERROR"
+            ? "Type anything to retry..."
+            : step === "DONE"
+              ? "Thanks for connecting! 🎉"
+              : "Please wait...";
 
   const isInputInvalid =
     step === "ASK_EMAIL" && input.trim().length > 0 && !EMAIL_RE.test(input.trim());
@@ -275,7 +321,7 @@ export function ScholarBot() {
               />
               <div className="flex items-center gap-3 relative z-10">
                 <div>
-                  <p className="font-bold text-sm">Scholar Bot</p>
+                  <p className="font-bold text-sm">Destiny 4 NEET Agent</p>
                   <p className="text-[0.6rem] text-white/80 uppercase tracking-wider flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                     Online
@@ -315,13 +361,17 @@ export function ScholarBot() {
                     {msg.text}
                     {/* Class selection buttons */}
                     {msg.buttons && (
-                      <div className="flex gap-2 mt-3">
+                      <div className={`flex gap-2 ${msg.buttons.some(b => b.value === "SKIP_PHONE") ? "mt-1" : "mt-3"}`}>
                         {msg.buttons.map((btn) => (
                           <button
                             key={btn.value}
-                            onClick={() => handleClassSelect(btn.value)}
-                            disabled={step !== "ASK_CLASS"}
-                            className="px-4 py-2 bg-primary/10 text-primary text-xs font-semibold rounded-full border border-primary/20 hover:bg-primary hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            onClick={() => handleButtonAction(btn.value)}
+                            disabled={step !== "ASK_CLASS" && step !== "ASK_PHONE"}
+                            className={
+                              btn.value === "SKIP_PHONE"
+                                ? "px-2 py-0.5 text-[10px] text-slate-800 hover:text-black underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                : "px-3 py-1.5 bg-primary/10 text-primary text-[11px] font-semibold rounded-full border border-primary/20 hover:bg-primary hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            }
                           >
                             {btn.label}
                           </button>
