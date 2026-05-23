@@ -18,6 +18,86 @@ interface Testimonial {
 
 const mockTestimonials: Testimonial[] = [
   {
+    id: "sp1",
+    name: "Dr. Saumya Patel",
+    college: "PKDIMS",
+    score: "MBBS",
+    rank: "NEET UG",
+    batch: "Batch of 2022",
+    image: "/testimonials/Dr_Saumya_Patel/image.png",
+    quote: "Sir, Thank you for being the kind of teacher every student hopes for. You sparked curiosity amongst your students and always motivated us to push our limits. You made the difficult topics easy and memorable. I will always carry the confidence you helped to build. Grateful for memories and your teachings."
+  },
+  {
+    id: "anj1",
+    name: "Dr. Anjali Kumari",
+    college: "Agartala Govt. Medical College",
+    score: "MBBS",
+    rank: "NEET UG",
+    batch: "Target Batch",
+    image: "/testimonials/Dr_Anjali_Kumari/image.png",
+    quote: "Dr. Manohar Shah Sir, Your teaching has been truly inspiring. You consistently foster a supportive and encouraging learning environment that enhances our confidence and motivates us to excel. Even the most challenging topics became clear and accessible under your guidance, as you skillfully simplified concepts and connected them with relatable examples, making it easier to remember. Your dedication to teaching has left a lasting impact on our learning experience."
+  },
+  {
+    id: "p1",
+    name: "Dr. Pariza Parveen",
+    college: "Bhagat Phool Singh Government Medical College for Women",
+    score: "MBBS",
+    rank: "NEET UG",
+    batch: "Final Year Student",
+    image: "/testimonials/Dr_Pariza_Parveen/image.png",
+    quote: "Dr. Manohar Sah Sir is truly an exceptional teacher who constantly motivates & inspires his students to do their best. His classes create a very supportive & positive learning environment, where every student feels encouraged & confident to ask questions & grow. Even the most difficult topics of zoology become easy to understand because of his unique teaching style - he simplifies concepts & connects them with relatable stories, making them much more memorable. His dedication, clarity of explanation, & ability to build strong conceptual understanding have made a huge difference in my learning journey. I am grateful to have learned from such a knowledgeable & inspiring mentor."
+  },
+  {
+    id: "mar1",
+    name: "Dr. Mariyam",
+    college: "Government Medical College, Budaun",
+    score: "MBBS",
+    rank: "NEET UG",
+    batch: "Target Batch",
+    image: "/testimonials/Dr_Mariyam/image.png",
+    quote: "You are such an Amazing teacher who always motivates us. You Create a very supportive Environment and continously boosts our Confidence. Some topics were really difficult, but you made them easy to understand by connecting them with Relatable stories which made them Memorable. Thank you, Dr. Manohar Shah, for your constant guidance & encouragement."
+  },
+  {
+    id: "ar1",
+    name: "Dr. Aryan Satish Madham",
+    college: "Amala Institute of Medical Sciences, Thrissur",
+    score: "MBBS",
+    rank: "NEET UG",
+    batch: "Target Batch",
+    image: "/testimonials/Dr_Aryan/image.png",
+    quote: "Dr. Manohar Sah had been a wonderful guide during my NEET preparation. He is a passionate teacher who helped us understand the core of many complex topics instead of just reading lines from the book. Because of his guidance and support, many of us developed a stronger interest in learning. I am truly grateful for his influence and the inspiration he provided. His impact has stayed with me outside the classroom and motivates me to do better today as well."
+  },
+  {
+    id: "a1",
+    name: "Dr. Ayushi Kumari",
+    college: "ABVIMS & Dr. RML Hospital",
+    score: "MBBS",
+    rank: "NEET UG",
+    batch: "2nd Year Student",
+    image: "/testimonials/Dr_Ayushi_Kumari/image.png",
+    quote: "Dr. Manohar Sah Sir, you have played a truly phenomenal role in my NEET journey, and I am deeply grateful for everything you have done for me. Your way of explaining concepts is truly unique - you simplify even the most difficult topics so clearly that they become easy to understand and impossible to forget. The way you connect concepts and make them logical helped me recall answers instantly just by reading a question, which made a huge difference in my preparation. Along with that, your constant motivation and guidance always kept me on the right track. You supported me during my low phases and understood exactly where I needed to improve. Your belief in me gave me confidence when I needed it the most. Honestly, I can't imagine clearing NEET without your teaching and guidance. I will always be grateful to you."
+  },
+  {
+    id: "vis1",
+    name: "Dr. Vismaya",
+    college: "Lady Hardinge Medical College, Delhi",
+    score: "MBBS",
+    rank: "NEET UG",
+    batch: "Target Batch",
+    image: "/testimonials/Dr_Vismaya/image.png",
+    quote: "I am extremely grateful to Dr. Manohar Sir, for the immense support & motivation he provided. He just did not teach the subject but helped to develop my confidence & made me believe that I could achieve my dreams at a time I was having doubts about myself. You kept pushing me to be my best. Thanks to your patience learning from you has been a joyful experience. You never refused to clear my doubts & even adopted different approaches to make me understand it. You pushed me because you knew what I was capable of even when I didn't. Thank you for your unwavering support."
+  },
+  {
+    id: "k1",
+    name: "Dr. Khushi Gaur",
+    college: "Dr. DY Patil Medical College and Hospital, Pune",
+    score: "MBBS",
+    rank: "NEET UG",
+    batch: "Target Batch",
+    image: "/testimonials/Dr_Khushi_Gaur/image.png",
+    quote: "Dr. Manohar Sah Sir, You have a unique way of explaining concepts that makes even the most difficult topics feel simple and approachable. Your patience and encouragement create a comfortable space to ask questions and learn without hesitation. Truly grateful for the clarity and confidence you bring into every class. Your guidance played a huge role in my studies."
+  },
+  {
     id: "v1",
     name: "Dr Vandana Sharma",
     college: "Lady Hardinge Medical College",
@@ -37,107 +117,8 @@ const mockTestimonials: Testimonial[] = [
     image: "/testimonials/Dr_Monika/dr_monika.png",
     quote: "Respected sir, Thank you for your guidance. You truly inspired us to achieve our goals. I am fortunate enough to be your student. Your classes were truly engaging. Thank you sir."
   },
-  {
-    id: "1",
-    name: "Ritu Gupta",
-    college: "AIIMS Delhi",
-    score: "715 / 720",
-    rank: "AIR 12",
-    batch: "Alpha + Delta (Sigma)",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAp7nak78aJmWOcGNjWGW-rdRVPqVrNPh-UxHcSzXn7zA3pROvMVTEMzc0iMG1Qt1lu1R6PI9YWzoh-SlofbnIwNzyFcLZj_Yb4GmEfnYaG6VZ4KuDghTGpUB8517o1uLGj_vrxpI8Mo9mYQCwbyKLzgIY8xslsa8aP1pCLRnSL8H8GdIlqtKzEDSB3hmDJwx2zE-xFCc8pC8oXlBilF6Eb2zXujw2RX4G2g5_71V9raT84UcPA61rk14JV9LF16-y3x9Cw3gudhG5b",
-    quote: "Secured my dream college with intensive mentorship. The clarity of instruction and personalized attention made the definitive difference in my NEET preparation journey. The mock tests were incredibly relevant."
-  },
-  {
-    id: "2",
-    name: "Kartik Agarwal",
-    college: "MAMC Delhi",
-    score: "705 / 720",
-    rank: "AIR 45",
-    batch: "Alpha",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAGysv9YJDmKAADHlkbVzlrI7416mbeX0yeTw6B-hlWjNgSo1kQIWs7IIjpMmyfio9I-1wOgkxQGO7h1lhhZJ8HQV0JFAqF4aZjoDXDR7N6nKfXhBKABmfXi0Y67UxZX86bzxfwpLj8ngnr-I1bRRH-olTAAVkdTtAp_Sn5yqOBPFqRiAmftfvzWXI_yInx2UttO5_AJmZG6rcvC9v0hCjysLuPiDiOH9B_dsW3nOFnvTTSpjl-dx7j4bLHxul8_czZqRCxQgDxvjL9",
-    quote: "The small batch size meant total transparency. Every doubt was resolved immediately, building immense confidence to tackle the hardest NEET patterns. Manohar Sir's notes are pure gold."
-  },
-  {
-    id: "3",
-    name: "Shivam Kumar",
-    college: "AFMC Pune",
-    score: "695 / 720",
-    rank: "AIR 120",
-    batch: "Alpha",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCHpOKANu6D1oezfE4zl4StNBzY_MGPy5mslQa51l8rUH3XN3XBKxm25cMI8u3GM8HdHZa5OBtrnyJCVAAWCPE1G8JtbE2coWp9s02kYvTY5Scx1HYgzE8OcN8VJMsh9C3-R4hmzQh7fF35I2vITCmpKvZ-K48CeRFwz199yP60CUvAtcyHEqEewFrVlKhUSLmXrD3TCvMMLxdIDOH7T4EzEHd9-y1V88SUSKavyYkO6TyDBw_szUofCCkOain4PG_mvjMGbLY30pOG",
-    quote: "Manohar Sir changed how I approach Biology. A decade of dominance is not just a tagline, it's a measurable reality. From scoring 320 in Bio to a perfect 360, the journey was incredible."
-  },
-  {
-    id: "4",
-    name: "Ankita",
-    college: "KGMU Lucknow",
-    score: "690 / 720",
-    rank: "AIR 180",
-    batch: "Delta",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC3lyHZaA8S06Zzwd6XdZYYIc01921h0w4pac2sqomDaLZJLVpm6_7zycFy5aadgC0xpMMn7ikIC2YPD8BCBtrX2YLO_M8gIU71nG2gAK63KVM2PSiLstshWK5HHPSIOvuEun1pGAdZp3vm3j0q2sCggPKRT4OZ0Th_6EMYeRSOYcsj29otuPOzaM1f9MnwfEn-svV0YQS4TS3lUtLuA0pvdWuZlKJw-RsAA9T5In0Oh_hq581zckGuoKLiVx_ToDqnK2Tqg6U6SETo",
-    quote: "The rigorous mock test environment perfectly simulated the real NEET pressure. By the time I sat for the exam, it felt like just another practice test."
-  },
-  {
-    id: "5",
-    name: "Naman Omar",
-    college: "JIPMER",
-    score: "700 / 720",
-    rank: "AIR 85",
-    batch: "Delta",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBvV12RzXWWjktZknh-ix1DBq4ofa74rL6WJp8Mg8R7rZW-sbZXtDAtFUCntHClpHcZPeaCLtRKT_9_mlCB4HUi8LlyASY_FScFacZpteT0eXt7NdY8QSrhbwJcNw0lZo3LZgPGS9v1nV9NifczNZkzwDt1v1Q9m3nziLYBr2WUeHZPIRbjTppttq7Tpx_O6x2FB9tbfthwXE0nM3RGGqnQlyX0D7Th8ejFZDEm0m9JibCVctBz9ztbBZzV83i23LMuJbmhAeOxnF2D",
-    quote: "What stood out for me was the individualized strategy. They didn't just teach us; they showed us how to attempt the paper strategically to maximize scores."
-  },
-  {
-    id: "6",
-    name: "Sakshi Goyal",
-    college: "VMMC Delhi",
-    score: "685 / 720",
-    rank: "AIR 250",
-    batch: "Alpha",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAp7nak78aJmWOcGNjWGW-rdRVPqVrNPh-UxHcSzXn7zA3pROvMVTEMzc0iMG1Qt1lu1R6PI9YWzoh-SlofbnIwNzyFcLZj_Yb4GmEfnYaG6VZ4KuDghTGpUB8517o1uLGj_vrxpI8Mo9mYQCwbyKLzgIY8xslsa8aP1pCLRnSL8H8GdIlqtKzEDSB3hmDJwx2zE-xFCc8pC8oXlBilF6Eb2zXujw2RX4G2g5_71V9raT84UcPA61rk14JV9LF16-y3x9Cw3gudhG5b",
-    quote: "Biology was my weakest subject, but the continuous revision cycles and targeted doubt sessions completely transformed my performance."
-  },
-  {
-    id: "7",
-    name: "Aditya Verma",
-    college: "AIIMS Jodhpur",
-    score: "692 / 720",
-    rank: "AIR 155",
-    batch: "Sigma",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAGysv9YJDmKAADHlkbVzlrI7416mbeX0yeTw6B-hlWjNgSo1kQIWs7IIjpMmyfio9I-1wOgkxQGO7h1lhhZJ8HQV0JFAqF4aZjoDXDR7N6nKfXhBKABmfXi0Y67UxZX86bzxfwpLj8ngnr-I1bRRH-olTAAVkdTtAp_Sn5yqOBPFqRiAmftfvzWXI_yInx2UttO5_AJmZG6rcvC9v0hCjysLuPiDiOH9B_dsW3nOFnvTTSpjl-dx7j4bLHxul8_czZqRCxQgDxvjL9",
-    quote: "The test series is unmatched. The questions are exactly at the NEET level, helping me gauge my true standing before the final exam."
-  },
-  {
-    id: "8",
-    name: "Neha Singh",
-    college: "SMS Jaipur",
-    score: "680 / 720",
-    rank: "AIR 310",
-    batch: "Alpha",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCHpOKANu6D1oezfE4zl4StNBzY_MGPy5mslQa51l8rUH3XN3XBKxm25cMI8u3GM8HdHZa5OBtrnyJCVAAWCPE1G8JtbE2coWp9s02kYvTY5Scx1HYgzE8OcN8VJMsh9C3-R4hmzQh7fF35I2vITCmpKvZ-K48CeRFwz199yP60CUvAtcyHEqEewFrVlKhUSLmXrD3TCvMMLxdIDOH7T4EzEHd9-y1V88SUSKavyYkO6TyDBw_szUofCCkOain4PG_mvjMGbLY30pOG",
-    quote: "Consistent support and motivation from the faculty kept me going during the tough phases of preparation."
-  },
-  // Add a few more just to show pagination works
-  {
-    id: "9",
-    name: "Rohan Patel",
-    college: "BJMC Pune",
-    score: "675 / 720",
-    rank: "AIR 420",
-    batch: "Delta",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBvV12RzXWWjktZknh-ix1DBq4ofa74rL6WJp8Mg8R7rZW-sbZXtDAtFUCntHClpHcZPeaCLtRKT_9_mlCB4HUi8LlyASY_FScFacZpteT0eXt7NdY8QSrhbwJcNw0lZo3LZgPGS9v1nV9NifczNZkzwDt1v1Q9m3nziLYBr2WUeHZPIRbjTppttq7Tpx_O6x2FB9tbfthwXE0nM3RGGqnQlyX0D7Th8ejFZDEm0m9JibCVctBz9ztbBZzV83i23LMuJbmhAeOxnF2D",
-    quote: "The environment here breeds excellence. When you study with the best, you naturally push your boundaries."
-  },
-  {
-    id: "10",
-    name: "Megha Jain",
-    college: "GSVM Kanpur",
-    score: "670 / 720",
-    rank: "AIR 510",
-    batch: "Alpha",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC3lyHZaA8S06Zzwd6XdZYYIc01921h0w4pac2sqomDaLZJLVpm6_7zycFy5aadgC0xpMMn7ikIC2YPD8BCBtrX2YLO_M8gIU71nG2gAK63KVM2PSiLstshWK5HHPSIOvuEun1pGAdZp3vm3j0q2sCggPKRT4OZ0Th_6EMYeRSOYcsj29otuPOzaM1f9MnwfEn-svV0YQS4TS3lUtLuA0pvdWuZlKJw-RsAA9T5In0Oh_hq581zckGuoKLiVx_ToDqnK2Tqg6U6SETo",
-    quote: "Highly recommended for serious aspirants. The focus on NCERT is exactly what is needed for current NEET patterns."
-  }
+
+  
 ];
 
 export function TestimonialsGrid() {
