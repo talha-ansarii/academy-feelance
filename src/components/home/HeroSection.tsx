@@ -15,7 +15,7 @@ const stagger = {
 
 export function HeroSection() {
   return (
-    <section className="relative flex min-h-[85vh] items-center px-6 py-20 lg:py-0 overflow-hidden bg-white mt-24">
+    <section className="relative flex min-h-[85vh] items-center px-6 py-20 lg:py-0 overflow-hidden bg-white md:mt-24">
       {/* Subtle light background gradients */}
       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-blue-50/50 via-white to-transparent -z-10" />
       <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-blue-50/30 rounded-full blur-3xl -translate-y-1/4 translate-x-1/3 -z-10" />
