@@ -497,31 +497,6 @@ export default async function ResourcesPage({
         </div>
       </div>
 
-      {/* Newsletter Section */}
-      <section className="mx-auto mt-16 max-w-7xl px-6 lg:px-8">
-        <div className="rounded-lg border border-primary/10 bg-primary-container/30 p-12 text-center">
-          <h3 className="font-heading text-2xl font-bold text-on-surface mb-4">
-            Never Miss a Critical Update
-          </h3>
-          <p className="mx-auto mb-8 max-w-md text-sm text-on-surface-variant">
-            Join 20,000+ aspirants receiving weekly high-yield notes and
-            exam notifications directly in their inbox.
-          </p>
-          <form className="mx-auto flex max-w-lg flex-col gap-2 md:flex-row">
-            <input
-              className="flex-grow rounded border border-outline bg-white px-4 py-2 text-sm focus:ring-2 focus:ring-primary/20"
-              placeholder="Enter your academic email"
-              type="email"
-            />
-            <button
-              type="button"
-              className="rounded bg-primary px-6 py-2 text-sm font-bold text-white hover:bg-on-primary-container transition-all"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </section>
     </main>
   );
 }
