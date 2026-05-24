@@ -44,7 +44,7 @@ export function Navbar() {
           <NavItems items={navItems} />
           <div className="flex items-center gap-3">
             <NavbarButton href="/#enquiry" variant="primary">Book Demo</NavbarButton>
-            <a href="https://wa.me/9810352371" target="_blank" rel="noopener noreferrer" className="hidden lg:flex items-center justify-center bg-[#128C7E] text-white p-2.5 rounded-full hover:bg-[#075E54] transition-colors shadow-sm">
+            <a href="https://wa.me/919810352371" target="_blank" rel="noopener noreferrer" className="hidden lg:flex items-center justify-center bg-[#128C7E] text-white p-2.5 rounded-full hover:bg-[#075E54] transition-colors shadow-sm">
               <WhatsAppIcon className="w-5 h-5" />
             </a>
           </div>
@@ -55,7 +55,7 @@ export function Navbar() {
           <MobileNavHeader>
             <NavbarLogo />
             <div className="flex items-center gap-4">
-              <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="text-white p-1.5 rounded-full bg-[#128C7E] hover:bg-[#075E54] shadow-sm transition-colors">
+              <a href="https://wa.me/919810352371" target="_blank" rel="noopener noreferrer" className="text-white p-1.5 rounded-full bg-[#128C7E] hover:bg-[#075E54] shadow-sm transition-colors">
                 <WhatsAppIcon className="w-5 h-5" />
               </a>
               <MobileNavToggle
