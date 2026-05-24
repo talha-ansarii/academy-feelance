@@ -220,7 +220,7 @@ export function TestimonialsGrid() {
                   <img
                     src={selectedTestimonial.image}
                     alt={selectedTestimonial.name}
-                    className="w-full h-full object-cover rounded-2xl"
+                    className="w-full h-full object-cover object-top rounded-2xl"
                   />
                 </motion.div>
 
