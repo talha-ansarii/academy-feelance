@@ -11,7 +11,7 @@ export function FacultyGrid() {
     {
       name: "Mr. Himanshu",
       role: "Chemistry Expert",
-      experience: "15+ Yrs Exp",
+      experience: "20+ Yrs Exp",
       achievements: "Making complex Chemistry equations easy and scoring for NEET.",
       image: "/sir/himanshu.png",
       alt: "Mr. Himanshu"
@@ -19,7 +19,7 @@ export function FacultyGrid() {
     {
       name: "Mr. Sanjay Kumar",
       role: "Biology Expert",
-      experience: "18+ Yrs Exp",
+      experience: "20+ Yrs Exp",
       achievements: "Specialist in building a strong foundation in Plant Sciences.",
       image: "/sir/sanjay.jpeg",
       alt: "Mr. Sanjay Kumar"
@@ -56,7 +56,7 @@ export function FacultyGrid() {
                   <h3 className="font-headline text-xl font-bold text-on-surface mb-1">{faculty.name}</h3>
                   <p className="text-primary font-label text-[0.7rem] font-bold uppercase tracking-widest">{faculty.role}</p>
                 </div>
-                <div className="bg-primary-container px-2 py-1 rounded text-on-primary-container text-[0.65rem] font-bold">
+                <div className="bg-primary-container px-2 py-1 mt-1 rounded text-on-primary-container text-[0.65rem] font-bold">
                   {faculty.experience}
                 </div>
               </div>

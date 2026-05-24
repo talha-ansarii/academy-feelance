@@ -4,11 +4,11 @@ export function FacultyQuote() {
       <div className="relative rounded-2xl overflow-hidden bg-primary text-white p-12 md:p-20 flex flex-col md:flex-row gap-16 items-center">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white to-transparent"></div>
         <div className="relative w-64 md:w-80 flex-none">
-          <div className="aspect-square rounded-2xl border-4 border-primary-container/30 overflow-hidden shadow-2xl rotate-3">
+          <div className="aspect-square rounded-2xl border-4 border-primary-container/30 overflow-hidden shadow-2xl rotate-3 bg-white">
             <img
-              className="w-full h-full object-cover -rotate-3 scale-110"
-              alt="Distinguished gentleman in a library study, looking thoughtfully towards the camera, representing academic leadership"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5ZwS--EOOjZoWrV5jrpezj7v85pkLe2y6aObV83ahC0PoEOjfrO4hZrUR2oCaZF60fgfxNs_DpzSgTg9K2Gu7QgONKLiNIYaTNX6UOOsHlwk1ZocY5e96G3dexy_XmjcC3p_4rW5pEbDze4zRjv-qWcdudQbeLyt0AU2s9ijehpD1Bur7LkVnowu2R3H01QcNebEhbBOlcPLvlXBVnXxe_UcLD5Ja5KU1zlYQX8ZtbgQ6RqSlMII4N-brfu4Vzgb5CdTHiaqCJzO4"
+              className="w-full h-full object-cover -rotate-3 scale-110 object-top"
+              alt="Dr. Manohar Sah"
+              src="/sir/manohar.png"
             />
           </div>
         </div>

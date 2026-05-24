@@ -5,7 +5,9 @@ export function Footer() {
     <footer className="bg-tertiary text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div>
-          <div className="font-bold text-xl text-white mb-6 tracking-tight">Destiny 4 NEET</div>
+          <div className="mb-6">
+            <img src="/logo.png" alt="Destiny 4 NEET Logo" className="h-10 w-auto" />
+          </div>
           <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
             Personal mentorship for NEET aspirants who need clarity, discipline, and a calm path toward becoming a doctor.
           </p>
@@ -22,7 +24,11 @@ export function Footer() {
           <p className="text-slate-400 text-sm leading-relaxed mb-4">
             Book a demo class and speak with a mentor about batch fit, study habits, and your NEET preparation needs.
           </p>
-          <Link href="/#enquiry" className="text-white font-bold text-sm hover:text-primary-container transition-colors">Go to enquiry form</Link>
+          <Link href="/#enquiry" className="inline-block text-white font-bold text-sm hover:text-primary-container transition-colors mb-6">Go to enquiry form</Link>
+          <div className="flex flex-col gap-2 text-sm text-slate-400">
+            <p><span className="text-white font-medium">Sah Sir (Biology):</span> +91 98103 52371</p>
+            <p><span className="text-white font-medium">Sanjay Sir (Biology):</span> +91 98382 76817</p>
+          </div>
         </div>
       </div>
       <div className="mt-16 pt-8 border-t border-white/5 text-center">

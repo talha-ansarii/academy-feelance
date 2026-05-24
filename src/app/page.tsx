@@ -6,9 +6,8 @@ import { LeadCaptureForm } from '@/components/home/LeadCaptureForm';
 
 export default function HomePage() {
   return (
-    <main className="pt-24 overflow-x-hidden">
+    <main className=" overflow-x-hidden bg-white">
       <HeroSection />
-      <br/>
       <ResultsGallery />
       <FeaturesSection />
       <TestimonialSection />

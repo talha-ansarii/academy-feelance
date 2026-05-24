@@ -18,6 +18,13 @@ export const metadata: Metadata = {
   title: 'Destiny 4 NEET | Personal Mentorship for Medical Aspirants',
   description: 'Focused NEET preparation with small batches, personal guidance, mock-test strategy, and student-first mentorship.',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
+  openGraph: {
+    images: [{ url: '/logo.png' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/logo.png'],
+  },
 };
 
 export default function RootLayout({
